@@ -94,7 +94,7 @@ New features
                                               .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+/, "")
                                               .readLines()
                 def subject = cleanFullMessage[ 0 ]
-                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n  ') : null
+                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
 
                 writer.writeLine "* $subject"
                 if (body?.trim()) {
@@ -114,7 +114,7 @@ Bugfixes
                                              .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+/, "")
                                              .readLines()
                 def subject = cleanFullMessage[ 0 ]
-                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n  ') : null
+                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
 
                 writer.writeLine "* $subject"
                 if (body?.trim()) {
