@@ -94,10 +94,10 @@ New features
                                               .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
                                               .readLines()
                 def subject = cleanFullMessage[ 0 ].trim()
-                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
+                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
 
                 writer.writeLine "* $subject"
-                if (body?.trim()) {
+                if (body) {
                     writer.writeLine """
     $body
 """
@@ -114,10 +114,10 @@ Bugfixes
                                              .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
                                              .readLines()
                 def subject = cleanFullMessage[ 0 ].trim()
-                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
+                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
 
                 writer.writeLine "* $subject"
-                if (body?.trim()) {
+                if (body) {
                     writer.writeLine """
     $body
 """
