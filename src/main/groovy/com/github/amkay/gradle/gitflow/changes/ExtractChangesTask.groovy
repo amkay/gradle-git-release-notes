@@ -91,10 +91,10 @@ New features
 
             newFeatures.each { feature ->
                 def cleanFullMessage = feature.fullMessage
-                                              .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+/, "")
+                                              .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
                                               .readLines()
                 def subject = cleanFullMessage[ 0 ]
-                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
+                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
 
                 writer.writeLine "* $subject"
                 if (body?.trim()) {
@@ -111,10 +111,10 @@ Bugfixes
 
             bugfixes.each { bugfix ->
                 def cleanFullMessage = bugfix.fullMessage
-                                             .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+/, "")
+                                             .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
                                              .readLines()
                 def subject = cleanFullMessage[ 0 ]
-                def body = cleanFullMessage.size() > 1 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
+                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ') : null
 
                 writer.writeLine "* $subject"
                 if (body?.trim()) {
