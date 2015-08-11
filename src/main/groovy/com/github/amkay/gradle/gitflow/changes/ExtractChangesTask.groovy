@@ -84,43 +84,48 @@ class ExtractChangesTask extends DefaultTask {
 Changes since version $tagName"""
             writer.writeLine '=' * ("Changes since version $tagName".length() + 1)
 
-            writer.writeLine """
+            if (newFeatures) {
+                writer.writeLine """
 New features
 -------------
 """
 
-            newFeatures.each { feature ->
-                def cleanFullMessage = feature.fullMessage
-                                              .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
-                                              .readLines()
-                def subject = cleanFullMessage[ 0 ].trim()
-                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
+                newFeatures.each { feature ->
+                    def cleanFullMessage = feature.fullMessage
+                                                  .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/,
+                                                              "")
+                                                  .readLines()
+                    def subject = cleanFullMessage[ 0 ].trim()
+                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
 
-                writer.writeLine "* $subject"
-                if (body) {
-                    writer.writeLine """
+                    writer.writeLine "* $subject"
+                    if (body) {
+                        writer.writeLine """
     $body
 """
+                    }
                 }
             }
 
-            writer.writeLine """
+            if (bugfixes) {
+                writer.writeLine """
 Bugfixes
 ---------
 """
 
-            bugfixes.each { bugfix ->
-                def cleanFullMessage = bugfix.fullMessage
-                                             .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
-                                             .readLines()
-                def subject = cleanFullMessage[ 0 ].trim()
-                def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
+                bugfixes.each { bugfix ->
+                    def cleanFullMessage = bugfix.fullMessage
+                                                 .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
+                                                 .readLines()
+                    def subject = cleanFullMessage[ 0 ].trim()
+                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
 
-                writer.writeLine "* $subject"
-                if (body) {
-                    writer.writeLine """
+                    writer.writeLine "* $subject"
+                    if (body) {
+                        writer.writeLine """
     $body
 """
+                    }
                 }
             }
         }
