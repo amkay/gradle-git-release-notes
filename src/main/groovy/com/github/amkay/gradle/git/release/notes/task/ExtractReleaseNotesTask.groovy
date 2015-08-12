@@ -56,7 +56,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
         List<Commit> newFeatures = commitsSinceLastTag.findAll {
             it.fullMessage =~ /[Cc]lose(s|d)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
         }
-        List<Commit> bugfixes = commitsSinceLastTag.findAll { it.fullMessage =~ /[Ff]ix(es|ed)? #\d+/ }
+        List<Commit> bugfixes = commitsSinceLastTag.findAll {
+            it.fullMessage =~ /[Ff]ix(es|ed)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
+        }
 
         LOGGER.info "Found new features:"
         newFeatures.each { LOGGER.info "  * ${it.shortMessage}" }
