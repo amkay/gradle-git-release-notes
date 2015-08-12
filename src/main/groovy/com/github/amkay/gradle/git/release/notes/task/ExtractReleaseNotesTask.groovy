@@ -38,7 +38,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
         def version = project.version
 
-        def tagName = "$versionPrefix${version.normalVersion}".toString()
+        def tagName = "v${version.normalVersion}".toString()
         def tag = grgit.tag.list().find { it.name == tagName }
 
         def commitsSinceLastTag
