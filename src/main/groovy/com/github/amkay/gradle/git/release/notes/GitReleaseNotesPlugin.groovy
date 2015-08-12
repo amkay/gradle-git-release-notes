@@ -15,6 +15,7 @@
  */
 package com.github.amkay.gradle.git.release.notes
 
+import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -26,9 +27,8 @@ import org.gradle.api.Project
 class GitReleaseNotesPlugin implements Plugin<Project> {
 
     @Override
-    void apply(final Project target) {
-        // TODO: Implement
-        throw new UnsupportedOperationException()
+    void apply(final Project project) {
+        project.tasks.create ExtractReleaseNotesTask.NAME, ExtractReleaseNotesTask
     }
 
 }
