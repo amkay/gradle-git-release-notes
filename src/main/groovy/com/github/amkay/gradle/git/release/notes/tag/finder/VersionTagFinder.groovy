@@ -17,7 +17,6 @@ package com.github.amkay.gradle.git.release.notes.tag.finder
 
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Tag
-import org.gradle.api.Nullable
 import org.gradle.api.Project
 
 /**
@@ -25,14 +24,13 @@ import org.gradle.api.Project
  *
  * @author Max Käufer
  */
-interface TagFinder {
+class VersionTagFinder implements TagFinder {
 
-    static List<TagFinder> TAG_FINDERS = [
-      new GitflowVersionTagFinder(),
-      new VersionTagFinder()
-    ]
+    @Override
+    Tag find(final Project project, final Grgit grgit) {
+        def tagName = "v${project.version}".toString()
 
-    @Nullable
-    Tag find(final Project project, final Grgit grgit)
+        grgit.tag.list().find { it.name == tagName }
+    }
 
 }
