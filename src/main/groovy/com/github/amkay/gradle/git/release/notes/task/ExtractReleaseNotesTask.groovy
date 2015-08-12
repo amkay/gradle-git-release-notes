@@ -15,20 +15,12 @@
  */
 package com.github.amkay.gradle.git.release.notes.task
 
-import com.github.amkay.gradle.gitflow.dsl.GitflowPluginExtension
-import com.github.amkay.gradle.gitflow.version.DelayedVersionWithType
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
-
-import static com.github.amkay.gradle.gitflow.GitflowPlugin.EXT_GITFLOW
-import static com.github.amkay.gradle.gitflow.version.NearestVersionLocator.CONFIG_SECTION_GITFLOW
-import static com.github.amkay.gradle.gitflow.version.NearestVersionLocator.CONFIG_SUBSECTION_PREFIX
-import static com.github.amkay.gradle.gitflow.version.NearestVersionLocator.CONFIG_VERSION_TAG
-import static com.github.amkay.gradle.gitflow.version.NearestVersionLocator.DEFAULT_PREFIX_VERSION
 
 /**
  * TODO
@@ -42,15 +34,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     @TaskAction
     void extractChanges() {
-        def extension = project[ EXT_GITFLOW ] as GitflowPluginExtension
+        def grgit = Grgit.open dir: './'
 
-        def grgit = Grgit.open dir: extension.repositoryRoot
-        def versionPrefix = grgit.repository.jgit.repository.config
-                                 .getString(CONFIG_SECTION_GITFLOW,
-                                            CONFIG_SUBSECTION_PREFIX,
-                                            CONFIG_VERSION_TAG) ?: DEFAULT_PREFIX_VERSION
-
-        def version = project.version as DelayedVersionWithType
+        def version = project.version
 
         def tagName = "$versionPrefix${version.normalVersion}".toString()
         def tag = grgit.tag.list().find { it.name == tagName }
