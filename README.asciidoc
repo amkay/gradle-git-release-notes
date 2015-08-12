@@ -17,7 +17,7 @@ image:https://img.shields.io/badge/docs-{doc-version}-blue.svg["Documentation", 
 image:http://stillmaintained.com/amkay/gradle-git-release-notes.svg["Project Status", link="https://stillmaintained.com/amkay/gradle-git-release-notes"]
 image:https://img.shields.io/github/license/amkay/gradle-git-release-notes.svg["License", link="https://github.com/amkay/gradle-git-release-notes/blob/master/LICENSE.md"]
 image:https://travis-ci.org/amkay/gradle-git-release-notes.svg?branch=develop["Build Status", link="https://travis-ci.org/amkay/gradle-git-release-notes"]
-//image:https://www.versioneye.com/user/projects/project-id-here/badge.svg?style=flat["Dependency Status", link="https://www.versioneye.com/user/projects/project-id-here"]
+image:https://www.versioneye.com/user/projects/55cbcb59dfed0a001f000184/badge.svg?style=flat["Dependency Status", link="https://www.versioneye.com/user/projects/55cbcb59dfed0a001f000184"]
 image:https://img.shields.io/badge/semver-2.0.0-blue.svg["Semantic Versioning", link="http://semver.org/spec/v2.0.0.html"]
 image:https://img.shields.io/badge/git-flow-blue.svg["Gitflow", link="http://nvie.com/posts/a-successful-git-branching-model/"]
 
