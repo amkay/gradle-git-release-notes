@@ -98,3 +98,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+
+## Ignore cache files of ZSH Gradle plugin
+.gradletasknamecache
