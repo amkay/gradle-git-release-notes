@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.amkay.gradle.gitflow.changes
+package com.github.amkay.gradle.git.release.notes.task
 
 import com.github.amkay.gradle.gitflow.dsl.GitflowPluginExtension
 import com.github.amkay.gradle.gitflow.version.DelayedVersionWithType
