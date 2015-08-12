@@ -1,0 +1,64 @@
+= gradle-git-release-notes
+Max Käufer;
+:version: 0.0.0
+:doc-version: dev
+:doc-path: https://amkay.github.io/gradle-git-release-notes/develop/doc
+:download-version: dev
+:download-path: https://github.com/amkay/gradle-git-release-notes/tree/gh-pages/develop
+:doctype: book
+:sectanchors:
+:sectlinks:
+:source-highlighter: highlightjs
+:icons: font
+
+
+image:https://img.shields.io/badge/download-{download-version}-blue.svg["Download", link="{download-path}"]
+image:https://img.shields.io/badge/docs-{doc-version}-blue.svg["Documentation", link="{doc-path}/groovydoc"]
+image:http://stillmaintained.com/amkay/gradle-github-release.svg["Project Status", link="https://stillmaintained.com/amkay/gradle-git-release-notes"]
+image:https://img.shields.io/github/license/amkay/gradle-github-release.svg["License", link="https://github.com/amkay/gradle-git-release-notes/blob/master/LICENSE.md"]
+image:https://travis-ci.org/amkay/gradle-github-release.svg?branch=develop["Build Status", link="https://travis-ci.org/amkay/gradle-git-release-notes"]
+//image:https://www.versioneye.com/user/projects/project-id-here/badge.svg?style=flat["Dependency Status", link="https://www.versioneye.com/user/projects/project-id-here"]
+image:https://img.shields.io/badge/semver-2.0.0-blue.svg["Semantic Versioning", link="http://semver.org/spec/v2.0.0.html"]
+image:https://img.shields.io/badge/git-flow-blue.svg["Gitflow", link="http://nvie.com/posts/a-successful-git-branching-model/"]
+
+A https://gradle.org/[Gradle] plugin that extracts release notes from https://git-scm.com[Git]'s commit history.
+
+
+
+[[usage]]
+== Usage
+
+Include the following in the project on which you want to apply the plugin:
+
+[source,groovy,subs="attributes"]
+----
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.github.amkay:gradle-git-release-notes:{version}'
+  }
+}
+
+apply plugin: 'com.github.amkay.git-release-notes'
+----
+
+NOTE: The latest build of the current development version can always be obtained from https://github.com/amkay/gradle-git-release-notes/tree/gh-pages/develop[here].
+
+
+[[configuration]]
+=== Configuration
+
+The plugin registers an extension object named `gitReleaseNotes` that is the entry point to the configuration.
+It also provides a DSL for keyword-based configuration, but configuration via properties is also possible.
+The following example shows all configuration options:
+
+[source,groovy]
+----
+gitReleaseNotes {
+  // TODO
+}
+----
+
