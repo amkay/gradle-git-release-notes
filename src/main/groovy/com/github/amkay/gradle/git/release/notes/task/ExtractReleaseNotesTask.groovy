@@ -35,10 +35,10 @@ import static com.github.amkay.gradle.gitflow.version.NearestVersionLocator.DEFA
  *
  * @author Max Käufer
  */
-class ExtractChangesTask extends DefaultTask {
+class ExtractReleaseNotesTask extends DefaultTask {
 
-    private static final Logger LOGGER = Logging.getLogger ExtractChangesTask
-    static final         String NAME   = 'extractChanges'
+    private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
+    static final         String NAME   = 'extractReleaseNotes'
 
     @TaskAction
     void extractChanges() {
