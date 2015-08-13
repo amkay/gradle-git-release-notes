@@ -22,6 +22,8 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 
+import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG_FINDERS
+
 /**
  * TODO
  *
@@ -38,8 +40,10 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
         def version = project.version
 
-        def tagName = "v${version.normalVersion}".toString()
-        def tag = grgit.tag.list().find { it.name == tagName }
+        def tag = TAG_FINDERS.findResult { tagFinder ->
+            tagFinder.find project, grgit
+        }
+        def tagName = tag.name
 
         def commitsSinceLastTag
 
