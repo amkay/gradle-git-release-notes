@@ -38,8 +38,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
     void extractChanges() {
         def grgit = Grgit.open dir: './'
 
-        def version = project.version
-
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
         }
