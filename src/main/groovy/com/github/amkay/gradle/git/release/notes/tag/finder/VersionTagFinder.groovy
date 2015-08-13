@@ -15,10 +15,11 @@
  */
 package com.github.amkay.gradle.git.release.notes.tag.finder
 
-import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Tag
 import org.gradle.api.Project
+
+import static com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask.VERSION_PREFIX
 
 /**
  * TODO
@@ -29,7 +30,7 @@ class VersionTagFinder implements TagFinder {
 
     @Override
     Tag find(final Project project, final Grgit grgit) {
-        def tagName = "${ExtractReleaseNotesTask.VERSION_PREFIX}${project.version}".toString()
+        def tagName = "${VERSION_PREFIX}${project.version}".toString()
 
         grgit.tag.list().find { it.name == tagName }
     }
