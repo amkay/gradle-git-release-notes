@@ -35,6 +35,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     static final         String NAME   = 'extractReleaseNotes'
 
     private static final String REPOSITORY_ROOT = '/'
+    public static final  String VERSION_PREFIX  = 'v'
 
     @TaskAction
     void extractChanges() {
@@ -43,7 +44,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
         }
-        def tagName = tag.name.startsWith('v') ? tag.name[ 1..-1 ] : tag.name
+        def tagName = tag.name.startsWith(VERSION_PREFIX) ? tag.name[ 1..-1 ] : tag.name
 
         def commitsSinceLastTag
 

@@ -15,6 +15,7 @@
  */
 package com.github.amkay.gradle.git.release.notes.tag.finder
 
+import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Tag
 import org.gradle.api.Project
@@ -34,7 +35,7 @@ class GitflowVersionTagFinder implements TagFinder {
             return null
         }
 
-        def tagName = "v${version.normalVersion}".toString()
+        def tagName = "${ExtractReleaseNotesTask.VERSION_PREFIX}${version.normalVersion}".toString()
 
         grgit.tag.list().find { it.name == tagName }
     }
