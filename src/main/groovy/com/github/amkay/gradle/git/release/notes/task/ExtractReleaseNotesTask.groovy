@@ -47,6 +47,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
     public static final String BODY_INDENTATION = ' ' * 4
+   
+    public static final String H1_MARKER = '='
 
 
     @TaskAction
@@ -93,7 +95,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     protected void writeReleaseNotes(final Writer writer, final List<Commit> commits, final String headline,
                                      final String removeRegex) {
-       
+
         if (commits) {
             writeHeadline writer, headline, '-'
 
@@ -122,7 +124,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
                                |% gradle-gitflow
                                |% ${new Date()}""".stripMargin()
 
-            writeHeadline writer, "Changes since version $tagName", '='
+            writeHeadline writer, "Changes since version $tagName", H1_MARKER
 
             writeReleaseNotes writer, newFeatures, 'New features', REMOVE_NEW_FEATURE
             writeReleaseNotes writer, bugfixes, 'Bugfixes', REMOVE_BUGFIXES
