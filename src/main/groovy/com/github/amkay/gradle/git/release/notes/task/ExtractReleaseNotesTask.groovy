@@ -32,18 +32,43 @@ import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG
 class ExtractReleaseNotesTask extends DefaultTask {
 
     private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
-    static final         String NAME   = 'extractReleaseNotes'
+    static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
+                                          ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
+
+    private static final String REPOSITORY_ROOT = './'
+    public static final  String VERSION_PREFIX  = 'v'
+
+    public static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
+    public static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
+    public static final String REMOVE_NEW_FEATURE  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
+
+    public static final String INCLUDE_BUGFIX  = /[Ff]ix(es|ed)? #\d+/
+    public static final String EXCLUDE_BUGFIX  = /--no-release-note/
+    public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
+
+    public static final String DESTINATION_FILE = 'CHANGES.md'
+
+    public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
+
+    public static final String H1_MARKER = '='
+    public static final String H2_MARKER = '-'
+
+    public static final String HEADLINE_NEW_FEATURES = 'New features'
+    public static final String HEADLINE_BUGFIXES     = 'Bugfixes'
+
+    public static final String BODY_INDENTATION = ' ' * 4
+
 
     @TaskAction
-    void extractChanges() {
-        def grgit = Grgit.open dir: './'
+    void extractReleaseNotes() {
+        def grgit = Grgit.open dir: REPOSITORY_ROOT
 
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
         }
-        def tagName = tag.name.startsWith('v') ? tag.name[ 1..-1 ] : tag.name
+        def tagName = tag.name.startsWith(VERSION_PREFIX) ? tag.name[ 1..-1 ] : tag.name
 
-        def commitsSinceLastTag
+        List<Commit> commitsSinceLastTag
 
         if (tag) {
             LOGGER.info "Found last version tag ${tag.name} ($tag.commit.abbreviatedId)."
@@ -55,71 +80,77 @@ class ExtractReleaseNotesTask extends DefaultTask {
         LOGGER.debug "Found commits since last tag:"
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
-        List<Commit> newFeatures = commitsSinceLastTag.findAll {
-            it.fullMessage =~ /[Cc]lose(s|d)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
-        }
-        List<Commit> bugfixes = commitsSinceLastTag.findAll {
-            it.fullMessage =~ /[Ff]ix(es|ed)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
-        }
+        List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
+        List<Commit> bugfixes = extractBugfixes commitsSinceLastTag
 
         LOGGER.info "Found new features:"
         newFeatures.each { LOGGER.info "  * ${it.shortMessage}" }
         LOGGER.info "Found bugfixes:"
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
+        writeReleaseNotes tagName, newFeatures, bugfixes
+    }
+
+    private List<Commit> filterCommits(final List<Commit> commits, final String includeRegex,
+                                       final String excludeRegex) {
+
+        commits.findAll {
+            it.fullMessage =~ includeRegex && !(it.fullMessage =~ excludeRegex)
+        }
+    }
+
+    private List<Commit> extractNewFeatures(final List<Commit> commits) {
+        filterCommits commits, INCLUDE_NEW_FEATURE, EXCLUDE_NEW_FEATURE
+    }
+
+    private List<Commit> extractBugfixes(final List<Commit> commits) {
+        filterCommits commits, INCLUDE_BUGFIX, EXCLUDE_BUGFIX
+    }
+
+    protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
+        writer.writeLine ''
+        writer.writeLine text
+        writer.writeLine headlineMarker * (text.length() + 1)
+    }
+
+    protected void writeReleaseNotes(final Writer writer, final List<Commit> commits, final String headline,
+                                     final String removeRegex) {
+
+        if (commits) {
+            writeHeadline writer, headline, H2_MARKER
+
+            commits.each { commit ->
+                def cleanFullMessage = commit.fullMessage
+                                             .replaceAll(removeRegex, "")
+                                             .readLines()
+
+                def subject = cleanFullMessage[ 0 ].trim()
+                def body = cleanFullMessage.size() > 2 ?
+                           cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
+
+                writer.writeLine "* $subject"
+                if (body) {
+                    writer.writeLine "\n$BODY_INDENTATION$body\n"
+                }
+            }
+        }
+    }
+
+    protected void writeReleaseNotes(final String tagName, final List<Commit> newFeatures,
+                                     final List<Commit> bugfixes) {
+
         project.mkdir("${project.buildDir}/docs")
-        project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
+
+        project.file("${project.buildDir}/docs/$DESTINATION_FILE").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
-% gradle-gitflow'
-% ${new Date()}"
+                               |% $HEADER_PLUGIN_NAME
+                               |% ${new Date()}"""
+                               .stripMargin()
 
-Changes since version $tagName"""
-            writer.writeLine '=' * ("Changes since version $tagName".length() + 1)
+            writeHeadline writer, "Changes since version $tagName", H1_MARKER
 
-            if (newFeatures) {
-                writer.writeLine """
-New features
--------------
-"""
-
-                newFeatures.each { feature ->
-                    def cleanFullMessage = feature.fullMessage
-                                                  .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/,
-                                                              "")
-                                                  .readLines()
-                    def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
-
-                    writer.writeLine "* $subject"
-                    if (body) {
-                        writer.writeLine """
-    $body
-"""
-                    }
-                }
-            }
-
-            if (bugfixes) {
-                writer.writeLine """
-Bugfixes
----------
-"""
-
-                bugfixes.each { bugfix ->
-                    def cleanFullMessage = bugfix.fullMessage
-                                                 .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
-                                                 .readLines()
-                    def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
-
-                    writer.writeLine "* $subject"
-                    if (body) {
-                        writer.writeLine """
-    $body
-"""
-                    }
-                }
-            }
+            writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, REMOVE_NEW_FEATURE
+            writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, REMOVE_BUGFIXES
         }
     }
 
