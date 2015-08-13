@@ -48,6 +48,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     public static final String BODY_INDENTATION = ' ' * 4
 
+    public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
+
     public static final String H1_MARKER = '='
     public static final String H2_MARKER = '-'
 
@@ -137,7 +139,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         project.mkdir("${project.buildDir}/docs")
         project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
-                               |% gradle-git-release-notes
+                               |% $HEADER_PLUGIN_NAME
                                |% ${new Date()}"""
                                .stripMargin()
 
