@@ -37,6 +37,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
     private static final String REPOSITORY_ROOT = '/'
     public static final  String VERSION_PREFIX  = 'v'
 
+    private static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
+
     @TaskAction
     void extractChanges() {
         def grgit = Grgit.open dir: REPOSITORY_ROOT
@@ -59,7 +61,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = commitsSinceLastTag.findAll {
-            it.fullMessage =~ /[Cc]lose(s|d)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
+            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ /--no-release-note/)
         }
         List<Commit> bugfixes = commitsSinceLastTag.findAll {
             it.fullMessage =~ /[Ff]ix(es|ed)? #\d+/ && !(it.fullMessage =~ /--no-release-note/)
