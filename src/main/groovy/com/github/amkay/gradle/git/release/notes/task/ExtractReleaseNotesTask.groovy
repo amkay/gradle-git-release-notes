@@ -93,6 +93,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     protected void writeReleaseNotes(final Writer writer, final List<Commit> commits, final String headline,
                                      final String removeRegex) {
+       
         if (commits) {
             writeHeadline writer, headline, '-'
 
