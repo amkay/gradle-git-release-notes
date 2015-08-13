@@ -29,7 +29,8 @@ interface TagFinder {
 
     static List<TagFinder> TAG_FINDERS = [
       new GitflowVersionTagFinder(),
-      new VersionTagFinder()
+      new VersionTagFinder(),
+      new NearestTagFinder()
     ]
 
     @Nullable
