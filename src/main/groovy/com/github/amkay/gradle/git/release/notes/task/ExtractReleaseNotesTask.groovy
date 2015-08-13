@@ -38,7 +38,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final  String VERSION_PREFIX  = 'v'
 
     private static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
-    private static final String INCLUDE_BUGFIX      = /[Ff]ix(es|ed)? #\d+/
+    private static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
+
+    private static final String INCLUDE_BUGFIX = /[Ff]ix(es|ed)? #\d+/
 
     @TaskAction
     void extractChanges() {
@@ -62,7 +64,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = commitsSinceLastTag.findAll {
-            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ /--no-release-note/)
+            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ EXCLUDE_NEW_FEATURE)
         }
         List<Commit> bugfixes = commitsSinceLastTag.findAll {
             it.fullMessage =~ INCLUDE_BUGFIX && !(it.fullMessage =~ /--no-release-note/)
