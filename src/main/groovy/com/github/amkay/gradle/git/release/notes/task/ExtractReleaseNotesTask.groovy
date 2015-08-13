@@ -43,7 +43,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
         }
-        def tagName = tag.name
+        def tagName = tag.name.startsWith('v') ? tag.name[ 1..-1 ] : tag.name
 
         def commitsSinceLastTag
 
