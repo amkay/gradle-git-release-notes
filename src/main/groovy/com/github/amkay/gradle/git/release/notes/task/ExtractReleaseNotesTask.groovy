@@ -64,7 +64,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         }
         def tagName = tag.name.startsWith(VERSION_PREFIX) ? tag.name[ 1..-1 ] : tag.name
 
-        def commitsSinceLastTag
+        List<Commit> commitsSinceLastTag
 
         if (tag) {
             LOGGER.info "Found last version tag ${tag.name} ($tag.commit.abbreviatedId)."
@@ -76,9 +76,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         LOGGER.debug "Found commits since last tag:"
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
-        List<Commit> newFeatures = commitsSinceLastTag.findAll {
-            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ EXCLUDE_NEW_FEATURE)
-        }
+        List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
         List<Commit> bugfixes = commitsSinceLastTag.findAll {
             it.fullMessage =~ INCLUDE_BUGFIX && !(it.fullMessage =~ EXCLUDE_BUGFIX)
         }
@@ -89,6 +87,12 @@ class ExtractReleaseNotesTask extends DefaultTask {
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
         writeReleaseNotes tagName, newFeatures, bugfixes
+    }
+
+    private List<Commit> extractNewFeatures(final List<Commit> commitsSinceLastTag) {
+        commitsSinceLastTag.findAll {
+            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ EXCLUDE_NEW_FEATURE)
+        }
     }
 
     protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
