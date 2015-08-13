@@ -123,6 +123,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
                 def cleanFullMessage = commit.fullMessage
                                              .replaceAll(removeRegex, "")
                                              .readLines()
+
                 def subject = cleanFullMessage[ 0 ].trim()
                 def body = cleanFullMessage.size() > 2 ?
                            cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
@@ -139,6 +140,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
                                      final List<Commit> bugfixes) {
 
         project.mkdir("${project.buildDir}/docs")
+
         project.file("${project.buildDir}/docs/$DESTINATION_FILE").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
                                |% $HEADER_PLUGIN_NAME
