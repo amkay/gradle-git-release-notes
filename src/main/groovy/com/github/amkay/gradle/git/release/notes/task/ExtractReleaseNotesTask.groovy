@@ -32,7 +32,8 @@ import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG
 class ExtractReleaseNotesTask extends DefaultTask {
 
     private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
-    static final         String NAME   = 'extractReleaseNotes'
+    static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
+                                          ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
     private static final String REPOSITORY_ROOT = '/'
     public static final  String VERSION_PREFIX  = 'v'
