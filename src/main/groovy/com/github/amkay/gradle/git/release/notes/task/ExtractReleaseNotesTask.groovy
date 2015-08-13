@@ -87,16 +87,20 @@ class ExtractReleaseNotesTask extends DefaultTask {
         writeReleaseNotes tagName, newFeatures, bugfixes
     }
 
-    private List<Commit> extractNewFeatures(final List<Commit> commitsSinceLastTag) {
-        commitsSinceLastTag.findAll {
-            it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ EXCLUDE_NEW_FEATURE)
+    private List<Commit> filterCommits(final List<Commit> commits, final String includeRegex,
+                                       final String excludeRegex) {
+
+        commits.findAll {
+            it.fullMessage =~ includeRegex && !(it.fullMessage =~ excludeRegex)
         }
     }
 
-    private List<Commit> extractBugfixes(final List<Commit> commitsSinceLastTag) {
-        commitsSinceLastTag.findAll {
-            it.fullMessage =~ INCLUDE_BUGFIX && !(it.fullMessage =~ EXCLUDE_BUGFIX)
-        }
+    private List<Commit> extractNewFeatures(final List<Commit> commits) {
+        filterCommits commits, INCLUDE_NEW_FEATURE, EXCLUDE_NEW_FEATURE
+    }
+
+    private List<Commit> extractBugfixes(final List<Commit> commits) {
+        filterCommits commits, INCLUDE_BUGFIX, EXCLUDE_BUGFIX
     }
 
     protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
