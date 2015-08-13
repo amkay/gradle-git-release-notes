@@ -52,7 +52,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String H2_MARKER = '-'
 
     public static final String HEADLINE_NEW_FEATURES = 'New features'
-    public static final String BUGFIXES_HEADLINE     = 'Bugfixes'
+    public static final String HEADLINE_BUGFIXES     = 'Bugfixes'
 
     public static final String BODY_INDENTATION = ' ' * 4
 
@@ -146,7 +146,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
             writeHeadline writer, "Changes since version $tagName", H1_MARKER
 
             writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, REMOVE_NEW_FEATURE
-            writeReleaseNotes writer, bugfixes, BUGFIXES_HEADLINE, REMOVE_BUGFIXES
+            writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, REMOVE_BUGFIXES
         }
     }
 
