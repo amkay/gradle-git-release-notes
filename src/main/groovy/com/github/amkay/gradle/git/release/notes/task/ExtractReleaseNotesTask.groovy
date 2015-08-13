@@ -77,9 +77,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
-        List<Commit> bugfixes = commitsSinceLastTag.findAll {
-            it.fullMessage =~ INCLUDE_BUGFIX && !(it.fullMessage =~ EXCLUDE_BUGFIX)
-        }
+        List<Commit> bugfixes = extractBugfixes commitsSinceLastTag
 
         LOGGER.info "Found new features:"
         newFeatures.each { LOGGER.info "  * ${it.shortMessage}" }
@@ -92,6 +90,12 @@ class ExtractReleaseNotesTask extends DefaultTask {
     private List<Commit> extractNewFeatures(final List<Commit> commitsSinceLastTag) {
         commitsSinceLastTag.findAll {
             it.fullMessage =~ INCLUDE_NEW_FEATURE && !(it.fullMessage =~ EXCLUDE_NEW_FEATURE)
+        }
+    }
+
+    private List<Commit> extractBugfixes(final List<Commit> commitsSinceLastTag) {
+        commitsSinceLastTag.findAll {
+            it.fullMessage =~ INCLUDE_BUGFIX && !(it.fullMessage =~ EXCLUDE_BUGFIX)
         }
     }
 
