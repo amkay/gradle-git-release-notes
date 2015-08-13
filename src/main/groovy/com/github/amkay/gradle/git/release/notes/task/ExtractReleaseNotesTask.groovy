@@ -41,8 +41,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
     private static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
     private static final String REMOVE_NEW_FEATURE  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
-    private static final String INCLUDE_BUGFIX = /[Ff]ix(es|ed)? #\d+/
-    private static final String EXCLUDE_BUGFIX = /--no-release-note/
+    private static final String INCLUDE_BUGFIX  = /[Ff]ix(es|ed)? #\d+/
+    private static final String EXCLUDE_BUGFIX  = /--no-release-note/
+    private static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
 
     @TaskAction
@@ -117,7 +118,7 @@ Bugfixes
 
                 bugfixes.each { bugfix ->
                     def cleanFullMessage = bugfix.fullMessage
-                                                 .replaceAll(/([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/, "")
+                                                 .replaceAll(REMOVE_BUGFIXES, "")
                                                  .readLines()
                     def subject = cleanFullMessage[ 0 ].trim()
                     def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
