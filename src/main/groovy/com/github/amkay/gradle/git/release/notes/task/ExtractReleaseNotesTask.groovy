@@ -47,8 +47,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
     public static final String BODY_INDENTATION = ' ' * 4
-   
+
     public static final String H1_MARKER = '='
+    public static final String H2_MARKER = '-'
 
 
     @TaskAction
@@ -97,7 +98,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
                                      final String removeRegex) {
 
         if (commits) {
-            writeHeadline writer, headline, '-'
+            writeHeadline writer, headline, H2_MARKER
 
             commits.each { commit ->
                 def cleanFullMessage = commit.fullMessage
