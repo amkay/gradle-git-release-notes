@@ -45,6 +45,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
     private static final String EXCLUDE_BUGFIX  = /--no-release-note/
     private static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
+    private static final String BODY_INDENTATION = ' ' * 4
+
 
     @TaskAction
     void extractChanges() {
@@ -99,13 +101,12 @@ New features
                                                   .replaceAll(REMOVE_NEW_FEATURE, "")
                                                   .readLines()
                     def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
+                    def body = cleanFullMessage.size() > 2 ?
+                               cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
 
                     writer.writeLine "* $subject"
                     if (body) {
-                        writer.writeLine """
-    $body
-"""
+                        writer.writeLine "\n$BODY_INDENTATION$body\n"
                     }
                 }
             }
@@ -121,13 +122,12 @@ Bugfixes
                                                  .replaceAll(REMOVE_BUGFIXES, "")
                                                  .readLines()
                     def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ? cleanFullMessage[ 2..-1 ].join('\n    ').trim() : null
+                    def body = cleanFullMessage.size() > 2 ?
+                               cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
 
                     writer.writeLine "* $subject"
                     if (body) {
-                        writer.writeLine """
-    $body
-"""
+                        writer.writeLine "\n$BODY_INDENTATION$body\n"
                     }
                 }
             }
