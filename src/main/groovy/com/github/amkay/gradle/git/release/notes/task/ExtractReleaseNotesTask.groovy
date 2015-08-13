@@ -42,6 +42,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     private static final String INCLUDE_BUGFIX = /[Ff]ix(es|ed)? #\d+/
     private static final String EXCLUDE_BUGFIX = /--no-release-note/
+   
 
     @TaskAction
     void extractChanges() {
