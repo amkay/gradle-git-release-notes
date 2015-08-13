@@ -90,41 +90,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
             writeHeadline writer, "Changes since version $tagName", '='
 
-            if (newFeatures) {
-                writeHeadline writer, 'New features', '-'
-
-                newFeatures.each { feature ->
-                    def cleanFullMessage = feature.fullMessage
-                                                  .replaceAll(REMOVE_NEW_FEATURE, "")
-                                                  .readLines()
-                    def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ?
-                               cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
-
-                    writer.writeLine "* $subject"
-                    if (body) {
-                        writer.writeLine "\n$BODY_INDENTATION$body\n"
-                    }
-                }
-            }
-
-            if (bugfixes) {
-                writeHeadline writer, 'Bugfixes', '-'
-
-                bugfixes.each { bugfix ->
-                    def cleanFullMessage = bugfix.fullMessage
-                                                 .replaceAll(REMOVE_BUGFIXES, "")
-                                                 .readLines()
-                    def subject = cleanFullMessage[ 0 ].trim()
-                    def body = cleanFullMessage.size() > 2 ?
-                               cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
-
-                    writer.writeLine "* $subject"
-                    if (body) {
-                        writer.writeLine "\n$BODY_INDENTATION$body\n"
-                    }
-                }
-            }
+            writeReleaseNotes writer, newFeatures, 'New features', REMOVE_NEW_FEATURE
+            writeReleaseNotes writer, bugfixes, 'Bugfixes', REMOVE_BUGFIXES
         }
     }
 
@@ -132,6 +99,27 @@ class ExtractReleaseNotesTask extends DefaultTask {
         writer.writeLine ''
         writer.writeLine text
         writer.writeLine headlineMarker * (text.length() + 1)
+    }
+
+    protected void writeReleaseNotes(final Writer writer, final List<Commit> commits, final String headline,
+                                     final String removeRegex) {
+        if (commits) {
+            writeHeadline writer, headline, '-'
+
+            commits.each { commit ->
+                def cleanFullMessage = commit.fullMessage
+                                             .replaceAll(removeRegex, "")
+                                             .readLines()
+                def subject = cleanFullMessage[ 0 ].trim()
+                def body = cleanFullMessage.size() > 2 ?
+                           cleanFullMessage[ 2..-1 ].join("\n$BODY_INDENTATION").trim() : null
+
+                writer.writeLine "* $subject"
+                if (body) {
+                    writer.writeLine "\n$BODY_INDENTATION$body\n"
+                }
+            }
+        }
     }
 
     @Override
