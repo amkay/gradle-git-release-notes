@@ -137,7 +137,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         project.mkdir("${project.buildDir}/docs")
         project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
-                               |% gradle-gitflow
+                               |% gradle-git-release-notes
                                |% ${new Date()}"""
                                .stripMargin()
 
