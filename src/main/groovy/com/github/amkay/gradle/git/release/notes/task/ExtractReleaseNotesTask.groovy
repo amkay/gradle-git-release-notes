@@ -50,7 +50,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
 
     @TaskAction
-    void extractChanges() {
+    void extractReleaseNotes() {
         def grgit = Grgit.open dir: REPOSITORY_ROOT
 
         def tag = TAG_FINDERS.findResult { tagFinder ->
