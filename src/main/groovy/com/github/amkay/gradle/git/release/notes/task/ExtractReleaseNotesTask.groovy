@@ -86,17 +86,12 @@ class ExtractReleaseNotesTask extends DefaultTask {
         project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
                                |% gradle-gitflow
-                               |% ${new Date()}
-                               |""".stripMargin()
+                               |% ${new Date()}""".stripMargin()
 
-            writer.writeLine "Changes since version $tagName"
-            writer.writeLine '=' * ("Changes since version $tagName".length() + 1)
+            writeHeadline writer, "Changes since version $tagName", '='
 
             if (newFeatures) {
-                writer.writeLine """
-New features
--------------
-"""
+                writeHeadline writer, 'New features', '-'
 
                 newFeatures.each { feature ->
                     def cleanFullMessage = feature.fullMessage
@@ -114,10 +109,7 @@ New features
             }
 
             if (bugfixes) {
-                writer.writeLine """
-Bugfixes
----------
-"""
+                writeHeadline writer, 'Bugfixes', '-'
 
                 bugfixes.each { bugfix ->
                     def cleanFullMessage = bugfix.fullMessage
@@ -134,6 +126,12 @@ Bugfixes
                 }
             }
         }
+    }
+
+    protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
+        writer.writeLine ''
+        writer.writeLine text
+        writer.writeLine headlineMarker * (text.length() + 1)
     }
 
     @Override
