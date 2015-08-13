@@ -123,7 +123,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
         project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
                                |% gradle-gitflow
-                               |% ${new Date()}""".stripMargin()
+                               |% ${new Date()}"""
+                               .stripMargin()
 
             writeHeadline writer, "Changes since version $tagName", H1_MARKER
 
