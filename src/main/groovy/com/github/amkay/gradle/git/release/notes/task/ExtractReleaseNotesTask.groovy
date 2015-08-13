@@ -82,17 +82,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         LOGGER.info "Found bugfixes:"
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
-        project.mkdir("${project.buildDir}/docs")
-        project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
-            writer.writeLine """% Changes since version $tagName
-                               |% gradle-gitflow
-                               |% ${new Date()}""".stripMargin()
-
-            writeHeadline writer, "Changes since version $tagName", '='
-
-            writeReleaseNotes writer, newFeatures, 'New features', REMOVE_NEW_FEATURE
-            writeReleaseNotes writer, bugfixes, 'Bugfixes', REMOVE_BUGFIXES
-        }
+        writeReleaseNotes tagName, newFeatures, bugfixes
     }
 
     protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
@@ -119,6 +109,22 @@ class ExtractReleaseNotesTask extends DefaultTask {
                     writer.writeLine "\n$BODY_INDENTATION$body\n"
                 }
             }
+        }
+    }
+
+    protected void writeReleaseNotes(final String tagName, final List<Commit> newFeatures,
+                                     final List<Commit> bugfixes) {
+
+        project.mkdir("${project.buildDir}/docs")
+        project.file("${project.buildDir}/docs/CHANGES.md").withWriter('utf-8') { writer ->
+            writer.writeLine """% Changes since version $tagName
+                               |% gradle-gitflow
+                               |% ${new Date()}""".stripMargin()
+
+            writeHeadline writer, "Changes since version $tagName", '='
+
+            writeReleaseNotes writer, newFeatures, 'New features', REMOVE_NEW_FEATURE
+            writeReleaseNotes writer, bugfixes, 'Bugfixes', REMOVE_BUGFIXES
         }
     }
 
