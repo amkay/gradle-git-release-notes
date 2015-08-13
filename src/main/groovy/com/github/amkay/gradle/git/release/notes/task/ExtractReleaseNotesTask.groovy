@@ -34,9 +34,11 @@ class ExtractReleaseNotesTask extends DefaultTask {
     private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
     static final         String NAME   = 'extractReleaseNotes'
 
+    private static final String REPOSITORY_ROOT = '/'
+
     @TaskAction
     void extractChanges() {
-        def grgit = Grgit.open dir: './'
+        def grgit = Grgit.open dir: REPOSITORY_ROOT
 
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
