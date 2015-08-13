@@ -46,8 +46,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String EXCLUDE_BUGFIX  = /--no-release-note/
     public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
-    public static final String BODY_INDENTATION = ' ' * 4
-
     public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
 
     public static final String H1_MARKER = '='
@@ -55,6 +53,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     public static final String HEADLINE_NEW_FEATURES = 'New features'
     public static final String BUGFIXES_HEADLINE     = 'Bugfixes'
+
+    public static final String BODY_INDENTATION = ' ' * 4
 
 
     @TaskAction
