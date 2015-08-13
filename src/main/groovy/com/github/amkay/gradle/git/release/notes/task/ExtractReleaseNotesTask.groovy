@@ -35,7 +35,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
                                           ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
-    private static final String REPOSITORY_ROOT = '/'
+    private static final String REPOSITORY_ROOT = './'
     public static final  String VERSION_PREFIX  = 'v'
 
     public static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
