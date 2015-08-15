@@ -34,6 +34,7 @@ class ReleaseNotes {
     }
 
 
+    @SuppressWarnings('ConfusingMethodName')
     void include(final String include) {
         setInclude include
     }
