@@ -44,6 +44,7 @@ class ReleaseNotes {
         setExclude exclude
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void remove(final String remove) {
         setRemove remove
     }
