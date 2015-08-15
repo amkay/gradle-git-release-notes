@@ -86,6 +86,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
         writeReleaseNotes tagName, newFeatures, bugfixes
+
+        grgit.close()
     }
 
     private List<Commit> filterCommits(final List<Commit> commits, final ReleaseNotes releaseNotes) {
