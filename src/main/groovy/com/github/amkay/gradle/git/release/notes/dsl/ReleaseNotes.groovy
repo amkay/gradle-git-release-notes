@@ -28,9 +28,9 @@ class ReleaseNotes {
 
 
     ReleaseNotes(final String include, final String exclude, final String remove) {
-        this.include = include
-        this.exclude = exclude
-        this.remove = remove
+        setInclude include
+        setExclude exclude
+        setRemove remove
     }
 
 
