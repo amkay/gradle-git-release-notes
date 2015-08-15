@@ -57,16 +57,16 @@ class GitReleaseNotesPluginExtension {
 
 
     void repositoryRoot(final String repositoryRoot) {
-        this.repositoryRoot = repositoryRoot
+        setRepositoryRoot repositoryRoot
     }
 
     void versionPrefix(final String versionPrefix) {
-        this.versionPrefix = versionPrefix
+        setVersionPrefix versionPrefix
     }
 
     String getVersionPrefix() {
         if (versionPrefix == null) {
-            versionPrefix = extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
+            setVersionPrefix extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
         }
 
         versionPrefix
@@ -86,7 +86,7 @@ class GitReleaseNotesPluginExtension {
     }
 
     void destination(final File destination) {
-        this.destination = destination
+        setDestination destination
     }
 
     void newFeatures(@DelegatesTo(ReleaseNotes) final Closure cl) {
