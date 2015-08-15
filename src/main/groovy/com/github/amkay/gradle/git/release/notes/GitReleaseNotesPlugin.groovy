@@ -29,7 +29,7 @@ class GitReleaseNotesPlugin implements Plugin<Project> {
 
     @Override
     void apply(final Project project) {
-        project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension
+        project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension, project
         project.tasks.create ExtractReleaseNotesTask.NAME, ExtractReleaseNotesTask
     }
 

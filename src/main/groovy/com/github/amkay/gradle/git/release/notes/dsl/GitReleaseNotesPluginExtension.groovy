@@ -15,6 +15,8 @@
  */
 package com.github.amkay.gradle.git.release.notes.dsl
 
+import org.gradle.api.Project
+
 /**
  * TODO
  *
@@ -28,6 +30,12 @@ class GitReleaseNotesPluginExtension {
 
     String repositoryRoot = './'
     String versionPrefix  = 'v'
+    File   destination
+
+
+    GitReleaseNotesPluginExtension(final Project project) {
+        destination = project.file "${project.buildDir}/docs/CHANGES.md"
+    }
 
 
     void repositoryRoot(final String repositoryRoot) {
@@ -36,6 +44,10 @@ class GitReleaseNotesPluginExtension {
 
     void versionPrefix(final String versionPrefix) {
         this.versionPrefix = versionPrefix
+    }
+
+    void destination(final File destination) {
+        this.destination = destination
     }
 
 }

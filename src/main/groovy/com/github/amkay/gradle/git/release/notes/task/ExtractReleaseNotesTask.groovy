@@ -44,8 +44,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String EXCLUDE_BUGFIX  = /--no-release-note/
     public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
-    public static final String DESTINATION_FILE = 'CHANGES.md'
-
     public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
 
     public static final String H1_MARKER = '='
@@ -145,9 +143,11 @@ class ExtractReleaseNotesTask extends DefaultTask {
     protected void writeReleaseNotes(final String tagName, final List<Commit> newFeatures,
                                      final List<Commit> bugfixes) {
 
-        project.mkdir("${project.buildDir}/docs")
+        def destination = extension.destination
 
-        project.file("${project.buildDir}/docs/$DESTINATION_FILE").withWriter('utf-8') { writer ->
+        destination.parentFile.mkdirs()
+
+        destination.withWriter('utf-8') { writer ->
             writer.writeLine """% Changes since version $tagName
                                |% $HEADER_PLUGIN_NAME
                                |% ${new Date()}"""
