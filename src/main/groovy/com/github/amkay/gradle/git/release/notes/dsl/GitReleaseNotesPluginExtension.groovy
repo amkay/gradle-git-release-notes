@@ -97,6 +97,7 @@ class GitReleaseNotesPluginExtension {
         ConfigureUtil.configure cl, newFeatures
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void bugfixes(@DelegatesTo(ReleaseNotes) final Closure cl) {
         ConfigureUtil.configure cl, bugfixes
     }
