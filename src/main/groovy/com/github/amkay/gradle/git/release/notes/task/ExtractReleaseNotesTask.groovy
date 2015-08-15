@@ -52,7 +52,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
                                'development branch.'
     final String group       = 'documentation'
 
-
     protected GitReleaseNotesPluginExtension extension
 
 
