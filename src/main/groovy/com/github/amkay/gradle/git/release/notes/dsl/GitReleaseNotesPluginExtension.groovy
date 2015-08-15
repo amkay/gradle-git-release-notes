@@ -87,6 +87,7 @@ class GitReleaseNotesPluginExtension {
         gitflowVersionPrefix
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void destination(final File destination) {
         setDestination destination
     }
