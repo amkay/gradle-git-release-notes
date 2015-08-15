@@ -56,10 +56,12 @@ class GitReleaseNotesPluginExtension {
     }
 
 
+    @SuppressWarnings('ConfusingMethodName')
     void repositoryRoot(final String repositoryRoot) {
         setRepositoryRoot repositoryRoot
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void versionPrefix(final String versionPrefix) {
         setVersionPrefix versionPrefix
     }
@@ -85,14 +87,17 @@ class GitReleaseNotesPluginExtension {
         gitflowVersionPrefix
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void destination(final File destination) {
         setDestination destination
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void newFeatures(@DelegatesTo(ReleaseNotes) final Closure cl) {
         ConfigureUtil.configure cl, newFeatures
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void bugfixes(@DelegatesTo(ReleaseNotes) final Closure cl) {
         ConfigureUtil.configure cl, bugfixes
     }

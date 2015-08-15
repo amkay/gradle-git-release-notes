@@ -34,14 +34,17 @@ class ReleaseNotes {
     }
 
 
+    @SuppressWarnings('ConfusingMethodName')
     void include(final String include) {
         setInclude include
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void exclude(final String exclude) {
         setExclude exclude
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void remove(final String remove) {
         setRemove remove
     }

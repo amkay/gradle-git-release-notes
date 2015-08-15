@@ -48,6 +48,10 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String BODY_INDENTATION = ' ' * 4
 
 
+    final String description = 'Extracts the changes since the last version from the commit messages on the ' +
+                               'development branch.'
+    final String group       = 'documentation'
+
     protected GitReleaseNotesPluginExtension extension
 
 
@@ -74,15 +78,15 @@ class ExtractReleaseNotesTask extends DefaultTask {
             commitsSinceLastTag = grgit.log()
         }
 
-        LOGGER.debug "Found commits since last tag:"
+        LOGGER.debug 'Found commits since last tag:'
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
         List<Commit> bugfixes = extractBugfixes commitsSinceLastTag
 
-        LOGGER.info "Found new features:"
+        LOGGER.info 'Found new features:'
         newFeatures.each { LOGGER.info "  * ${it.shortMessage}" }
-        LOGGER.info "Found bugfixes:"
+        LOGGER.info 'Found bugfixes:'
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
         writeReleaseNotes tagName, newFeatures, bugfixes
@@ -118,7 +122,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
             commits.each { commit ->
                 def cleanFullMessage = commit.fullMessage
-                                             .replaceAll(releaseNotes.remove, "")
+                                             .replaceAll(releaseNotes.remove, '')
                                              .readLines()
 
                 def subject = cleanFullMessage[ 0 ].trim()
@@ -151,16 +155,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
             writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, extension.newFeatures
             writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, extension.bugfixes
         }
-    }
-
-    @Override
-    String getDescription() {
-        'Extracts the changes since the last version from the commit messages on the development branch.'
-    }
-
-    @Override
-    String getGroup() {
-        'documentation'
     }
 
 }
