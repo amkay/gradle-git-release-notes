@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.amkay.gradle.git.release.notes.tag.finder
-
-import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
-import org.ajoberstar.grgit.Grgit
-import org.ajoberstar.grgit.Tag
-import org.gradle.api.Project
+package com.github.amkay.gradle.git.release.notes.dsl
 
 /**
  * TODO
  *
  * @author Max Käufer
  */
-class VersionTagFinder implements TagFinder {
+class ReleaseNotes {
 
-    @Override
-    Tag find(final Project project, final Grgit grgit) {
-        def extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
-        def tagName = "${extension.versionPrefix}${project.version}".toString()
+    String include
+    String exclude
+    String remove
 
-        grgit.tag.list().find { it.name == tagName }
+
+    ReleaseNotes(final String include, final String exclude, final String remove) {
+        this.include = include
+        this.exclude = exclude
+        this.remove = remove
+    }
+
+
+    void include(final String include) {
+        this.include = include
+    }
+
+    void exclude(final String exclude) {
+        this.exclude = exclude
+    }
+
+    void remove(final String remove) {
+        this.remove = remove
     }
 
 }
