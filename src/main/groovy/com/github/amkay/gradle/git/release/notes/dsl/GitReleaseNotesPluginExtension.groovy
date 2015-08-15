@@ -41,7 +41,7 @@ class GitReleaseNotesPluginExtension {
     private static final String CONFIG_SUBSECTION_PREFIX = 'prefix'
     private static final String CONFIG_VERSION_TAG       = 'versionTag'
 
-    public static final String VERSION_PREFIX = 'v'
+    private static final String VERSION_PREFIX = 'v'
 
     String repositoryRoot = './'
     String versionPrefix
@@ -52,21 +52,21 @@ class GitReleaseNotesPluginExtension {
 
 
     GitReleaseNotesPluginExtension(final Project project) {
-        destination = project.file "${project.buildDir}/docs/CHANGES.md"
+        setDestination project.file("${project.buildDir}/docs/CHANGES.md")
     }
 
 
     void repositoryRoot(final String repositoryRoot) {
-        this.repositoryRoot = repositoryRoot
+        setRepositoryRoot repositoryRoot
     }
 
     void versionPrefix(final String versionPrefix) {
-        this.versionPrefix = versionPrefix
+        setVersionPrefix versionPrefix
     }
 
     String getVersionPrefix() {
         if (versionPrefix == null) {
-            versionPrefix = extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
+            setVersionPrefix extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
         }
 
         versionPrefix
@@ -86,7 +86,7 @@ class GitReleaseNotesPluginExtension {
     }
 
     void destination(final File destination) {
-        this.destination = destination
+        setDestination destination
     }
 
     void newFeatures(@DelegatesTo(ReleaseNotes) final Closure cl) {

@@ -28,22 +28,22 @@ class ReleaseNotes {
 
 
     ReleaseNotes(final String include, final String exclude, final String remove) {
-        this.include = include
-        this.exclude = exclude
-        this.remove = remove
+        setInclude include
+        setExclude exclude
+        setRemove remove
     }
 
 
     void include(final String include) {
-        this.include = include
+        setInclude include
     }
 
     void exclude(final String exclude) {
-        this.exclude = exclude
+        setExclude exclude
     }
 
     void remove(final String remove) {
-        this.remove = remove
+        setRemove remove
     }
 
 }
