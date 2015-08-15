@@ -15,6 +15,7 @@
  */
 package com.github.amkay.gradle.git.release.notes.task
 
+import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.DefaultTask
@@ -61,6 +62,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     @TaskAction
     void extractReleaseNotes() {
+        def extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
+
         def grgit = Grgit.open dir: REPOSITORY_ROOT
 
         def tag = TAG_FINDERS.findResult { tagFinder ->

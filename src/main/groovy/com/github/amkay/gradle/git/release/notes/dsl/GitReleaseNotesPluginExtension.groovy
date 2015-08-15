@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.amkay.gradle.git.release.notes
-
-import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
-import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
-import org.gradle.api.Plugin
-import org.gradle.api.Project
+package com.github.amkay.gradle.git.release.notes.dsl
 
 /**
  * TODO
  *
  * @author Max Käufer
  */
-class GitReleaseNotesPlugin implements Plugin<Project> {
+class GitReleaseNotesPluginExtension {
 
-    @Override
-    void apply(final Project project) {
-        project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension
-        project.tasks.create ExtractReleaseNotesTask.NAME, ExtractReleaseNotesTask
-    }
+    static final String NAME = (GitReleaseNotesPluginExtension.simpleName[ 0 ].toLowerCase() +
+                                GitReleaseNotesPluginExtension.simpleName.substring(1)).replaceAll 'PluginExtension', ''
 
 }
