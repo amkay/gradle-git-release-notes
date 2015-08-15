@@ -61,6 +61,7 @@ class GitReleaseNotesPluginExtension {
         setRepositoryRoot repositoryRoot
     }
 
+    @SuppressWarnings('ConfusingMethodName')
     void versionPrefix(final String versionPrefix) {
         setVersionPrefix versionPrefix
     }
