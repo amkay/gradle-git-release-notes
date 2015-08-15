@@ -48,6 +48,10 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String BODY_INDENTATION = ' ' * 4
 
 
+    final String description = 'Extracts the changes since the last version from the commit messages on the ' +
+                               'development branch.'
+
+
     protected GitReleaseNotesPluginExtension extension
 
 
@@ -151,11 +155,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
             writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, extension.newFeatures
             writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, extension.bugfixes
         }
-    }
-
-    @Override
-    String getDescription() {
-        'Extracts the changes since the last version from the commit messages on the development branch.'
     }
 
     @Override
