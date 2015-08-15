@@ -52,7 +52,7 @@ class GitReleaseNotesPluginExtension {
 
 
     GitReleaseNotesPluginExtension(final Project project) {
-        destination = project.file "${project.buildDir}/docs/CHANGES.md"
+        setDestination project.file("${project.buildDir}/docs/CHANGES.md")
     }
 
 
