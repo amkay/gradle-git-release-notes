@@ -16,6 +16,7 @@
 package com.github.amkay.gradle.git.release.notes.task
 
 import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
+import com.github.amkay.gradle.git.release.notes.dsl.ReleaseNotes
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.DefaultTask
@@ -36,14 +37,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
     static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
                                           ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
-    public static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
-    public static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
-    public static final String REMOVE_NEW_FEATURE  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
-
-    public static final String INCLUDE_BUGFIX  = /[Ff]ix(es|ed)? #\d+/
-    public static final String EXCLUDE_BUGFIX  = /--no-release-note/
-    public static final String REMOVE_BUGFIXES = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
-
     public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
 
     public static final String H1_MARKER = '='
@@ -55,7 +48,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String BODY_INDENTATION = ' ' * 4
 
 
-    private GitReleaseNotesPluginExtension extension
+    protected GitReleaseNotesPluginExtension extension
 
 
     ExtractReleaseNotesTask() {
@@ -95,20 +88,18 @@ class ExtractReleaseNotesTask extends DefaultTask {
         writeReleaseNotes tagName, newFeatures, bugfixes
     }
 
-    private List<Commit> filterCommits(final List<Commit> commits, final String includeRegex,
-                                       final String excludeRegex) {
-
+    private List<Commit> filterCommits(final List<Commit> commits, final ReleaseNotes releaseNotes) {
         commits.findAll {
-            it.fullMessage =~ includeRegex && !(it.fullMessage =~ excludeRegex)
+            it.fullMessage =~ releaseNotes.include && !(it.fullMessage =~ releaseNotes.exclude)
         }
     }
 
     private List<Commit> extractNewFeatures(final List<Commit> commits) {
-        filterCommits commits, INCLUDE_NEW_FEATURE, EXCLUDE_NEW_FEATURE
+        filterCommits commits, extension.newFeatures
     }
 
     private List<Commit> extractBugfixes(final List<Commit> commits) {
-        filterCommits commits, INCLUDE_BUGFIX, EXCLUDE_BUGFIX
+        filterCommits commits, extension.bugfixes
     }
 
     protected void writeHeadline(final Writer writer, final String text, final String headlineMarker) {
@@ -118,14 +109,14 @@ class ExtractReleaseNotesTask extends DefaultTask {
     }
 
     protected void writeReleaseNotes(final Writer writer, final List<Commit> commits, final String headline,
-                                     final String removeRegex) {
+                                     final ReleaseNotes releaseNotes) {
 
         if (commits) {
             writeHeadline writer, headline, H2_MARKER
 
             commits.each { commit ->
                 def cleanFullMessage = commit.fullMessage
-                                             .replaceAll(removeRegex, "")
+                                             .replaceAll(releaseNotes.remove, "")
                                              .readLines()
 
                 def subject = cleanFullMessage[ 0 ].trim()
@@ -155,8 +146,8 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
             writeHeadline writer, "Changes since version $tagName", H1_MARKER
 
-            writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, REMOVE_NEW_FEATURE
-            writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, REMOVE_BUGFIXES
+            writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, extension.newFeatures
+            writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, extension.bugfixes
         }
     }
 

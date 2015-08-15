@@ -16,6 +16,7 @@
 package com.github.amkay.gradle.git.release.notes.dsl
 
 import org.gradle.api.Project
+import org.gradle.util.ConfigureUtil
 
 /**
  * TODO
@@ -27,10 +28,21 @@ class GitReleaseNotesPluginExtension {
     static final String NAME = (GitReleaseNotesPluginExtension.simpleName[ 0 ].toLowerCase() +
                                 GitReleaseNotesPluginExtension.simpleName.substring(1)).replaceAll 'PluginExtension', ''
 
+    private static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
+    private static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
+    private static final String REMOVE_NEW_FEATURE  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
+
+    private static final String INCLUDE_BUGFIX = /[Ff]ix(es|ed)? #\d+/
+    private static final String EXCLUDE_BUGFIX = /--no-release-note/
+    private static final String REMOVE_BUGFIX  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
+
 
     String repositoryRoot = './'
     String versionPrefix  = 'v'
     File   destination
+
+    ReleaseNotes newFeatures = new ReleaseNotes(INCLUDE_NEW_FEATURE, EXCLUDE_NEW_FEATURE, REMOVE_NEW_FEATURE)
+    ReleaseNotes bugfixes    = new ReleaseNotes(INCLUDE_BUGFIX, EXCLUDE_BUGFIX, REMOVE_BUGFIX)
 
 
     GitReleaseNotesPluginExtension(final Project project) {
@@ -48,6 +60,14 @@ class GitReleaseNotesPluginExtension {
 
     void destination(final File destination) {
         this.destination = destination
+    }
+
+    void newFeatures(@DelegatesTo(ReleaseNotes) final Closure cl) {
+        ConfigureUtil.configure cl, newFeatures
+    }
+
+    void bugfixes(@DelegatesTo(ReleaseNotes) final Closure cl) {
+        ConfigureUtil.configure cl, bugfixes
     }
 
 }
