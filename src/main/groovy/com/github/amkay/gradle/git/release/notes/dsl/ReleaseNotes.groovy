@@ -35,15 +35,15 @@ class ReleaseNotes {
 
 
     void include(final String include) {
-        this.include = include
+        setInclude include
     }
 
     void exclude(final String exclude) {
-        this.exclude = exclude
+        setExclude exclude
     }
 
     void remove(final String remove) {
-        this.remove = remove
+        setRemove remove
     }
 
 }
