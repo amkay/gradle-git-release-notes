@@ -50,6 +50,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
     final String description = 'Extracts the changes since the last version from the commit messages on the ' +
                                'development branch.'
+    final String group       = 'documentation'
 
 
     protected GitReleaseNotesPluginExtension extension
@@ -155,11 +156,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
             writeReleaseNotes writer, newFeatures, HEADLINE_NEW_FEATURES, extension.newFeatures
             writeReleaseNotes writer, bugfixes, HEADLINE_BUGFIXES, extension.bugfixes
         }
-    }
-
-    @Override
-    String getGroup() {
-        'documentation'
     }
 
 }
