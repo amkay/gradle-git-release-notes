@@ -27,10 +27,15 @@ class GitReleaseNotesPluginExtension {
 
 
     String repositoryRoot = './'
+    String versionPrefix  = 'v'
 
 
     void repositoryRoot(final String repositoryRoot) {
         this.repositoryRoot = repositoryRoot
+    }
+
+    void versionPrefix(final String versionPrefix) {
+        this.versionPrefix = versionPrefix
     }
 
 }

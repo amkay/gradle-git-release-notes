@@ -36,8 +36,6 @@ class ExtractReleaseNotesTask extends DefaultTask {
     static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
                                           ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
-    public static final String VERSION_PREFIX = 'v'
-
     public static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
     public static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
     public static final String REMOVE_NEW_FEATURE  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
@@ -68,7 +66,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit
         }
-        def tagName = tag.name.startsWith(VERSION_PREFIX) ? tag.name[ 1..-1 ] : tag.name
+        def tagName = tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
 
         List<Commit> commitsSinceLastTag
 
