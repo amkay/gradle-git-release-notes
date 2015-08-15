@@ -64,19 +64,23 @@ class GitReleaseNotesPluginExtension {
 
     String getVersionPrefix() {
         if (versionPrefix == null) {
-            def grgit = Grgit.open(dir: repositoryRoot)
-
-            def gitflowVersionPrefix = grgit.repository.jgit.repository.config
-                                            .getString(CONFIG_SECTION_GITFLOW,
-                                                       CONFIG_SUBSECTION_PREFIX,
-                                                       CONFIG_VERSION_TAG)
-
-            grgit.close()
-
-            versionPrefix = gitflowVersionPrefix
+            versionPrefix = extractVersionPrefixFromGitflow()
         }
 
         versionPrefix
+    }
+
+    private String extractVersionPrefixFromGitflow() {
+        def grgit = Grgit.open dir: repositoryRoot
+
+        def gitflowVersionPrefix = grgit.repository.jgit.repository.config
+                                        .getString(CONFIG_SECTION_GITFLOW,
+                                                   CONFIG_SUBSECTION_PREFIX,
+                                                   CONFIG_VERSION_TAG)
+
+        grgit.close()
+
+        gitflowVersionPrefix
     }
 
     void destination(final File destination) {
