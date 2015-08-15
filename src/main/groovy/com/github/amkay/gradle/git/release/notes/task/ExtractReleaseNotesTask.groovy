@@ -36,8 +36,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
                                           ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
-    private static final String REPOSITORY_ROOT = './'
-    public static final  String VERSION_PREFIX  = 'v'
+    public static final String VERSION_PREFIX = 'v'
 
     public static final String INCLUDE_NEW_FEATURE = /[Cc]lose(s|d)? #\d+/
     public static final String EXCLUDE_NEW_FEATURE = /--no-release-note/
@@ -64,7 +63,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     void extractReleaseNotes() {
         def extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
 
-        def grgit = Grgit.open dir: REPOSITORY_ROOT
+        def grgit = Grgit.open dir: extension.repositoryRoot
 
         def tag = TAG_FINDERS.findResult { tagFinder ->
             tagFinder.find project, grgit

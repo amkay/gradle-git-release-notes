@@ -25,4 +25,12 @@ class GitReleaseNotesPluginExtension {
     static final String NAME = (GitReleaseNotesPluginExtension.simpleName[ 0 ].toLowerCase() +
                                 GitReleaseNotesPluginExtension.simpleName.substring(1)).replaceAll 'PluginExtension', ''
 
+
+    String repositoryRoot = './'
+
+
+    void repositoryRoot(final String repositoryRoot) {
+        this.repositoryRoot = repositoryRoot
+    }
+
 }
