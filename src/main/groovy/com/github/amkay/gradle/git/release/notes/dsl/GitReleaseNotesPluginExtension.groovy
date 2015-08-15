@@ -41,6 +41,8 @@ class GitReleaseNotesPluginExtension {
     private static final String CONFIG_SUBSECTION_PREFIX = 'prefix'
     private static final String CONFIG_VERSION_TAG       = 'versionTag'
 
+    public static final String VERSION_PREFIX = 'v'
+
     String repositoryRoot = './'
     String versionPrefix
     File   destination
@@ -64,7 +66,7 @@ class GitReleaseNotesPluginExtension {
 
     String getVersionPrefix() {
         if (versionPrefix == null) {
-            versionPrefix = extractVersionPrefixFromGitflow()
+            versionPrefix = extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
         }
 
         versionPrefix
