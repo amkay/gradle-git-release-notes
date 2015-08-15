@@ -57,10 +57,16 @@ class ExtractReleaseNotesTask extends DefaultTask {
     public static final String BODY_INDENTATION = ' ' * 4
 
 
+    private GitReleaseNotesPluginExtension extension
+
+
+    ExtractReleaseNotesTask() {
+        this.extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
+    }
+
+
     @TaskAction
     void extractReleaseNotes() {
-        def extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
-
         def grgit = Grgit.open dir: extension.repositoryRoot
 
         def tag = TAG_FINDERS.findResult { tagFinder ->
