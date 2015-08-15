@@ -15,6 +15,7 @@
  */
 package com.github.amkay.gradle.git.release.notes.dsl
 
+import org.ajoberstar.grgit.Grgit
 import org.gradle.api.Project
 import org.gradle.util.ConfigureUtil
 
@@ -36,9 +37,14 @@ class GitReleaseNotesPluginExtension {
     private static final String EXCLUDE_BUGFIX = /--no-release-note/
     private static final String REMOVE_BUGFIX  = /([Cc]lose(s|d)?|[Ff]ix(es|ed)?) #\d+\s*\p{Punct}?\s*/
 
+    private static final String CONFIG_SECTION_GITFLOW   = 'gitflow'
+    private static final String CONFIG_SUBSECTION_PREFIX = 'prefix'
+    private static final String CONFIG_VERSION_TAG       = 'versionTag'
+
+    public static final String VERSION_PREFIX = 'v'
 
     String repositoryRoot = './'
-    String versionPrefix  = 'v'
+    String versionPrefix
     File   destination
 
     ReleaseNotes newFeatures = new ReleaseNotes(INCLUDE_NEW_FEATURE, EXCLUDE_NEW_FEATURE, REMOVE_NEW_FEATURE)
@@ -56,6 +62,27 @@ class GitReleaseNotesPluginExtension {
 
     void versionPrefix(final String versionPrefix) {
         this.versionPrefix = versionPrefix
+    }
+
+    String getVersionPrefix() {
+        if (versionPrefix == null) {
+            versionPrefix = extractVersionPrefixFromGitflow() ?: VERSION_PREFIX
+        }
+
+        versionPrefix
+    }
+
+    private String extractVersionPrefixFromGitflow() {
+        def grgit = Grgit.open dir: repositoryRoot
+
+        def gitflowVersionPrefix = grgit.repository.jgit.repository.config
+                                        .getString(CONFIG_SECTION_GITFLOW,
+                                                   CONFIG_SUBSECTION_PREFIX,
+                                                   CONFIG_VERSION_TAG)
+
+        grgit.close()
+
+        gitflowVersionPrefix
     }
 
     void destination(final File destination) {
