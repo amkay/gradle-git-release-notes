@@ -74,15 +74,15 @@ class ExtractReleaseNotesTask extends DefaultTask {
             commitsSinceLastTag = grgit.log()
         }
 
-        LOGGER.debug "Found commits since last tag:"
+        LOGGER.debug 'Found commits since last tag:'
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
         List<Commit> bugfixes = extractBugfixes commitsSinceLastTag
 
-        LOGGER.info "Found new features:"
+        LOGGER.info 'Found new features:'
         newFeatures.each { LOGGER.info "  * ${it.shortMessage}" }
-        LOGGER.info "Found bugfixes:"
+        LOGGER.info 'Found bugfixes:'
         bugfixes.each { LOGGER.info "  * ${it.shortMessage}" }
 
         writeReleaseNotes tagName, newFeatures, bugfixes
@@ -118,7 +118,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
             commits.each { commit ->
                 def cleanFullMessage = commit.fullMessage
-                                             .replaceAll(releaseNotes.remove, "")
+                                             .replaceAll(releaseNotes.remove, '')
                                              .readLines()
 
                 def subject = cleanFullMessage[ 0 ].trim()
