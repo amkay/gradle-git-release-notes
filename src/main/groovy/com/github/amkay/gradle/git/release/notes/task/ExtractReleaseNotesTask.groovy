@@ -75,6 +75,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
             LOGGER.info "Found last version tag ${tag.name} ($tag.commit.abbreviatedId)."
             commitsSinceLastTag = grgit.log { range tag.commit, grgit.head() }
         } else {
+            LOGGER.info "No version tag found."
             commitsSinceLastTag = grgit.log()
         }
 
