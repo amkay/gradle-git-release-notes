@@ -73,12 +73,15 @@ class ExtractReleaseNotesTask extends DefaultTask {
 
         if (tag) {
             LOGGER.info "Found last version tag ${tag.name} ($tag.commit.abbreviatedId)."
+            LOGGER.lifecycle "Considering commits between ${tag.name} and HEAD."
             commitsSinceLastTag = grgit.log { range tag.commit, grgit.head() }
         } else {
+            LOGGER.info "No version tag found."
+            LOGGER.lifecycle "Considering ALL commits."
             commitsSinceLastTag = grgit.log()
         }
 
-        LOGGER.debug 'Found commits since last tag:'
+        LOGGER.debug "Found commits since tag ${tag.name}:"
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
