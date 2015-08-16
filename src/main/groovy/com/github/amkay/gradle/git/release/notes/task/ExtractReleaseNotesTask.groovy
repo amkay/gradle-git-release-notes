@@ -78,7 +78,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
             commitsSinceLastTag = grgit.log()
         }
 
-        LOGGER.debug 'Found commits since last tag:'
+        LOGGER.debug "Found commits since tag ${tag.name}:"
         commitsSinceLastTag.each { LOGGER.debug "  * ${it.shortMessage}" }
 
         List<Commit> newFeatures = extractNewFeatures commitsSinceLastTag
