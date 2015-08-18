@@ -5,7 +5,5 @@
  * <p>
  *     The entry point to this configuration is {@link GitReleaseNotesPluginExtension}.
  * </p>
- *
- * @author Max Käufer
  */
 package com.github.amkay.gradle.git.release.notes.dsl;

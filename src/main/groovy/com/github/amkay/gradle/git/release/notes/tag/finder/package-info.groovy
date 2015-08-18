@@ -5,7 +5,5 @@
  * <p>
  *     The entry point to this package is the interface {@link TagFinder}.
  * </p>
- *
- * @author Max Käufer
  */
 package com.github.amkay.gradle.git.release.notes.tag.finder;
