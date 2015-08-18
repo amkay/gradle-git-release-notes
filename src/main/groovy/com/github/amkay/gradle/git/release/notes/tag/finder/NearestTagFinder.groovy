@@ -23,7 +23,9 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 
 /**
- * TODO
+ * This strategy for finding the <em>Git tag</em> of the latest release version is used if no other strategies find
+ * a matching <em>Git tag</em>.
+ * The strategy simply searches for the next reachable <em>Git tag</em> starting from the current <em>HEAD</em>.
  *
  * @author Max Käufer
  */
@@ -31,6 +33,12 @@ class NearestTagFinder implements TagFinder {
 
     private static final Logger LOGGER = Logging.getLogger NearestTagFinder
 
+    /**
+     * See {@link TagFinder#find(Project, Grgit)}.
+     * @param project
+     * @param grgit
+     * @return
+     */
     @Override
     Tag find(final Project project, final Grgit grgit) {
         LOGGER.debug "Locate beginning on branch: ${grgit.branch.current.fullName}"

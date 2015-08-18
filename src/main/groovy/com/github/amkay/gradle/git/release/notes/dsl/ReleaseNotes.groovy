@@ -16,14 +16,29 @@
 package com.github.amkay.gradle.git.release.notes.dsl
 
 /**
- * TODO
+ * A holder for configuring the extraction of various categories of release notes, e.g. <em>new features</em> and
+ * <em>bugfixes</em>.
  *
  * @author Max Käufer
  */
 class ReleaseNotes {
 
+    /**
+     * A regular expression that commit messages <strong>must</strong> match to be included as a release note.
+     */
     String include
+
+    /**
+     * A regular expression that commit messages <strong>must not</strong> match to be included as a release note.
+     * All commit messages &ndash; whether they match the regular expression set in <code>include</code> or not
+     * &ndash; that match this expression are excluded.
+     */
     String exclude
+
+    /**
+     * A regular expression that is used to remove text from the extracted commit messages. All substrings that match
+     * this expression are removed from the commit messages.
+     */
     String remove
 
 
@@ -34,16 +49,28 @@ class ReleaseNotes {
     }
 
 
+    /**
+     * Helper method to allow keyword-based configuration of the <code>include</code> property.
+     * @param include
+     */
     @SuppressWarnings('ConfusingMethodName')
     void include(final String include) {
         setInclude include
     }
 
+    /**
+     * Helper method to allow keyword-based configuration of the <code>exclude</code> property.
+     * @param exclude
+     */
     @SuppressWarnings('ConfusingMethodName')
     void exclude(final String exclude) {
         setExclude exclude
     }
 
+    /**
+     * Helper method to allow keyword-based configuration of the <code>remove</code> property.
+     * @param remove
+     */
     @SuppressWarnings('ConfusingMethodName')
     void remove(final String remove) {
         setRemove remove

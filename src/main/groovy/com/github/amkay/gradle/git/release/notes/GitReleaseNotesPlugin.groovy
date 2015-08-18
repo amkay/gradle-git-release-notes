@@ -21,12 +21,21 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 /**
- * TODO
+ * The entry point of the plugin.
+ *
+ * <p>
+ *     When the plugin is applied, it registers a {@link GitReleaseNotesPluginExtension} for configuration via a
+ *     DSL and an {@link ExtractReleaseNotesTask}.
+ * </p>
  *
  * @author Max Käufer
  */
 class GitReleaseNotesPlugin implements Plugin<Project> {
 
+    /**
+     * See {@link Plugin#apply(Object)}.
+     * @param project
+     */
     @Override
     void apply(final Project project) {
         project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension, project
