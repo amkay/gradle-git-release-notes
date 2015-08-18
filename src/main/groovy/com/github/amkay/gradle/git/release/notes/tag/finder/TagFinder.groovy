@@ -21,18 +21,39 @@ import org.gradle.api.Nullable
 import org.gradle.api.Project
 
 /**
- * TODO
+ * The interface for all strategies used to find the <em>Git tag</em> of the latest release version.
+ * See the package
+ * <a href="{@docRoot}/com/github/amkay/gradle/git/release/notes/tag/finder/package-summary.html#package-description">
+ *     tag.finder
+ * </a>
+ * to see all classes implementing this interface.
+
  *
  * @author Max Käufer
  */
 interface TagFinder {
 
+    /**
+     * All available tag finders.
+     * See the package
+     * <a href="{@docRoot}/com/github/amkay/gradle/git/release/notes/tag/finder/package-summary
+     * .html#package-description">
+     *     tag.finder
+     * </a>
+     * to see all classes implementing this interface.
+     */
     static List<TagFinder> TAG_FINDERS = [
       new GitflowVersionTagFinder(),
       new VersionTagFinder(),
       new NearestTagFinder()
     ]
 
+    /**
+     * Finds the <em>Git tag</em> of the latest release version.
+     * @param project the Gradle project this plugin was applied on
+     * @param grgit the {@link Grgit} instance of the configured repository
+     * @return the tag of the latest release version or null
+     */
     @Nullable
     Tag find(final Project project, final Grgit grgit)
 
