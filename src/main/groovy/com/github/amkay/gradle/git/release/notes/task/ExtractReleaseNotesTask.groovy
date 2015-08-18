@@ -32,7 +32,7 @@ import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG
  * It searches for the <em>Git tag</em> matching the current version of the project the plugin is applied on,
  * extracts all <em>commit messages</em> between the current <em>HEAD</em> and the found <em>Git tag</em>, filters
  * and cleans them based on the configuration given in {@link GitReleaseNotesPluginExtension} and writes the results
- * into the configured <a href="https://daringfireball.net/projects/markdown/">Markdown</a> file.
+ * into the configured <a href="https://daringfireball.net/projects/markdown/" target="_blank">Markdown</a> file.
  *
  * @author Max Käufer
  */
