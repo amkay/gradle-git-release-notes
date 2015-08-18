@@ -20,6 +20,7 @@ import com.github.amkay.gradle.git.release.notes.dsl.ReleaseNotes
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.DefaultTask
+import org.gradle.api.Task
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
@@ -27,15 +28,23 @@ import org.gradle.api.tasks.TaskAction
 import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG_FINDERS
 
 /**
- * TODO
+ * This is the main {@link Task} of this plugin.
+ * It searches for the <em>Git tag</em> matching the current version of the project the plugin is applied on,
+ * extracts all <em>commit messages</em> between the current <em>HEAD</em> and the found <em>Git tag</em>, filters
+ * and cleans them based on the configuration given in {@link GitReleaseNotesPluginExtension} and writes the results
+ * into the configured <a href="https://daringfireball.net/projects/markdown/">Markdown</a> file.
  *
  * @author Max Käufer
  */
 class ExtractReleaseNotesTask extends DefaultTask {
 
     private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
-    static final         String NAME   = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
-                                          ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
+
+    /**
+     * The name under which the task is registered on the project.
+     **/
+    static final String NAME = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
+                                ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
 
     public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
 
@@ -60,6 +69,9 @@ class ExtractReleaseNotesTask extends DefaultTask {
     }
 
 
+    /**
+     * The only task action of this task.
+     */
     @TaskAction
     void extractReleaseNotes() {
         def grgit = Grgit.open dir: extension.repositoryRoot
