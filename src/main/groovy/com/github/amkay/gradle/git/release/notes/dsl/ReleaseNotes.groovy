@@ -36,7 +36,7 @@ class ReleaseNotes {
     String exclude
 
     /**
-     * A regular expression that is used to remove text from the extracted commit messages. All substring that match
+     * A regular expression that is used to remove text from the extracted commit messages. All substrings that match
      * this expression are removed from the commit messages.
      */
     String remove
