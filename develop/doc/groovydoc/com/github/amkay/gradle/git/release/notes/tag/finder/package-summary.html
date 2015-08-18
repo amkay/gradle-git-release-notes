@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>com.github.amkay.gradle.git.release.notes.tag.finder (gradle-git-release-notes 0.0.0-dev.116+sha.22d29cb API)</title>
+<title>com.github.amkay.gradle.git.release.notes.tag.finder (gradle-git-release-notes 0.0.0-dev.138+sha.69753b6 API)</title>
 <meta name="keywords" content="com.github.amkay.gradle.git.release.notes.tag.finder package">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel ="stylesheet" TYPE="text/css" HREF="../../../../../../../../../stylesheet.css" title="Style">
@@ -11,7 +11,7 @@
 <script type="text/javascript">
 function windowTitle()
 {
-    parent.document.title="com.github.amkay.gradle.git.release.notes.tag.finder (gradle-git-release-notes 0.0.0-dev.116+sha.22d29cb API)";
+    parent.document.title="com.github.amkay.gradle.git.release.notes.tag.finder (gradle-git-release-notes 0.0.0-dev.138+sha.69753b6 API)";
 }
 </script>
 <noscript>
@@ -52,7 +52,21 @@ function windowTitle()
 </div>
 
 <div class="header">
-    <h2 title="" class="title"></h2>
+    <h2 title=" Provides the strategies for finding the <em>Git tag</em> of the latest release version of the project to which the
+ plugin is applied.
+
+ <p>
+     The entry point to this package is the interface <a href='../../../../../../../../../com/github/amkay/gradle/git/release/notes/tag/finder/TagFinder.html' title='TagFinder'>TagFinder</a>.
+ </p>
+ 
+" class="title"> Provides the strategies for finding the <em>Git tag</em> of the latest release version of the project to which the
+ plugin is applied.
+
+ <p>
+     The entry point to this package is the interface <a href='../../../../../../../../../com/github/amkay/gradle/git/release/notes/tag/finder/TagFinder.html' title='TagFinder'>TagFinder</a>.
+ </p>
+ 
+</h2>
 </div>
 
 <div class="contentContainer">
@@ -74,7 +88,8 @@ function windowTitle()
                                     TagFinder
                                 </a></strong>
                             </td>
-                            <td>TODO</td>
+                            <td>The interface for all strategies used to find the <em>Git tag</em> of the latest release version.
+ </td>
                         </tr>
 
                     </tbody>
@@ -102,7 +117,8 @@ function windowTitle()
                                     GitflowVersionTagFinder
                                 </a></strong>
                             </td>
-                            <td>TODO</td>
+                            <td>This strategy for finding the <em>Git tag</em> of the latest release version is used if the version of the project
+ the plugin was applied on has a <code>normalVersion</code> property. </td>
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
@@ -110,7 +126,9 @@ function windowTitle()
                                     NearestTagFinder
                                 </a></strong>
                             </td>
-                            <td>TODO</td>
+                            <td>This strategy for finding the <em>Git tag</em> of the latest release version is used if no other strategies find
+ a matching <em>Git tag</em>.
+ </td>
                         </tr>
 <tr class="altColor">
                             <td class="colOne">
@@ -118,7 +136,9 @@ function windowTitle()
                                     VersionTagFinder
                                 </a></strong>
                             </td>
-                            <td>TODO</td>
+                            <td>This strategy for finding the <em>Git tag</em> of the latest release version is used if the version of the project
+ the plugin was applied on is a normal <a href='https://docs.oracle.com/javase/7/docs/api/java/lang/String.html' title='String'>String</a>.
+ </td>
                         </tr>
 
                     </tbody>
