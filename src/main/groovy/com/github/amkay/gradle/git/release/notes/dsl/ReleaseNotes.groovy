@@ -17,7 +17,7 @@ package com.github.amkay.gradle.git.release.notes.dsl
 
 /**
  * A holder for configuring the extraction of various categories of release notes, e.g. <em>new features</em> and
- * em>bugfixes</em>.
+ * <em>bugfixes</em>.
  *
  * @author Max Käufer
  */
