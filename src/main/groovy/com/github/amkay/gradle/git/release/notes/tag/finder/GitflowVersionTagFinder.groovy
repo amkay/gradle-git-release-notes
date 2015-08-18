@@ -21,12 +21,20 @@ import org.ajoberstar.grgit.Tag
 import org.gradle.api.Project
 
 /**
- * TODO
+ * This strategy for finding the <em>Git tag</em> of the latest release version is used if the version of the project
+ * the plugin was applied on has a <code>normalVersion</code> property. This applies for example if the
+ * <a href="https://github.com/amkay/gradle-gitflow">gradle-gitflow</a> plugin is also applied on the project.
  *
  * @author Max Käufer
  */
 class GitflowVersionTagFinder implements TagFinder {
 
+    /**
+     * See {@link TagFinder#find(Project, Grgit)}.
+     * @param project
+     * @param grgit
+     * @return
+     */
     @Override
     Tag find(final Project project, final Grgit grgit) {
         def version = project.version
