@@ -46,7 +46,7 @@ interface TagFinder {
       new GitflowVersionTagFinder(),
       new VersionTagFinder(),
       new NearestTagFinder()
-    ]
+    ].asImmutable()
 
     /**
      * Finds the <em>Git tag</em> of the latest release version.
