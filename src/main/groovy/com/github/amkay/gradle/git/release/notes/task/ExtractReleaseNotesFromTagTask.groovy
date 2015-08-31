@@ -84,7 +84,7 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
     }
 
     private List<String> extractReleaseNotesFromTag(final Tag tag) {
-        if (tag.fullMessage.startsWith("${tag.name}")) {
+        if (tag.fullMessage.startsWith(tag.name)) {
             def lines = tag.fullMessage.readLines()
 
             return lines.size() > 2 ? lines[ 2..-1 ] : [ ]
