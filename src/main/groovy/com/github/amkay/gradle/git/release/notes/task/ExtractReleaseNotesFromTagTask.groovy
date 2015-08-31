@@ -69,8 +69,12 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
             throw new HeadNotTaggedException("The current HEAD is not tagged.")
         }
 
+        def version = getVersion tag
+
         LOGGER.lifecycle "Extracting release notes from tag ${tag.name}."
-        writeReleaseNotes tag
+        def releaseNotes = extractReleaseNotesFromTag tag
+
+        writeReleaseNotes version, releaseNotes
 
         grgit.close()
     }
@@ -93,10 +97,8 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         }
     }
 
-    private void writeReleaseNotes(final Tag tag) {
+    private void writeReleaseNotes(final String version, final List<String> releaseNotes) {
         def destination = extension.destination
-        def version = getVersion tag
-        def releaseNotes = extractReleaseNotesFromTag tag
 
         destination.parentFile.mkdirs()
 
