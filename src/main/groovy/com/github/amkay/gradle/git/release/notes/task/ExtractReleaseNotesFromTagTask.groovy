@@ -79,9 +79,13 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         grgit.tag.list().find { it.commit == head }
     }
 
+    private String getVersion(final Tag tag) {
+        tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
+    }
+
     private void writeReleaseNotes(final Tag tag) {
         def destination = extension.destination
-        def version = tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
+        def version = getVersion tag
         def releaseNotes
 
         if (tag.fullMessage.startsWith("${tag.name}")) {
