@@ -16,6 +16,7 @@
 package com.github.amkay.gradle.git.release.notes
 
 import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
+import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesFromTagTask
 import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -40,6 +41,7 @@ class GitReleaseNotesPlugin implements Plugin<Project> {
     void apply(final Project project) {
         project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension, project
         project.tasks.create ExtractReleaseNotesTask.NAME, ExtractReleaseNotesTask
+        project.tasks.create ExtractReleaseNotesFromTagTask.NAME, ExtractReleaseNotesFromTagTask
     }
 
 }
