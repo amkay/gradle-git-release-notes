@@ -83,17 +83,20 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
     }
 
+    private List<String> extractReleaseNotesFromTag(final Tag tag) {
+        if (tag.fullMessage.startsWith("${tag.name}")) {
+            def lines = tag.fullMessage.readLines()
+
+            return lines.size() > 2 ? lines[ 2..-1 ] : [ ]
+        } else {
+            return tag.name.readLines()
+        }
+    }
+
     private void writeReleaseNotes(final Tag tag) {
         def destination = extension.destination
         def version = getVersion tag
-        def releaseNotes
-
-        if (tag.fullMessage.startsWith("${tag.name}")) {
-            def lines = tag.fullMessage.readLines()
-            releaseNotes = lines.size() > 2 ? lines[ 2..-1 ] : [ ]
-        } else {
-            releaseNotes = tag.name.readLines()
-        }
+        def releaseNotes = extractReleaseNotesFromTag tag
 
         destination.parentFile.mkdirs()
 
