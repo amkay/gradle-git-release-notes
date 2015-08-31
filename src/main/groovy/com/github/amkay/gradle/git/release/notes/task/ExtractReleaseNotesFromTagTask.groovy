@@ -59,13 +59,16 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         def grgit = Grgit.open dir: extension.repositoryRoot
 
         def head = grgit.head()
-        def tag = grgit.tag.list().find { it.commit == head }
+        Tag tag = grgit.tag.list().find { it.commit == head }
+
+        LOGGER.debug "The current HEAD is ${head.abbreviatedId}."
 
         if (!tag) {
             grgit.close()
             throw new HeadNotTaggedException("The current HEAD is not tagged.")
         }
 
+        LOGGER.lifecycle "Extracting release notes from tag ${tag.name}."
         writeReleaseNotes tag
 
         grgit.close()
