@@ -17,6 +17,7 @@ package com.github.amkay.gradle.git.release.notes.task
 
 import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
 import com.github.amkay.gradle.git.release.notes.exception.HeadNotTaggedException
+import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Tag
 import org.gradle.api.DefaultTask
@@ -59,7 +60,7 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         def grgit = Grgit.open dir: extension.repositoryRoot
 
         def head = grgit.head()
-        Tag tag = grgit.tag.list().find { it.commit == head }
+        def tag = findTagOfHead grgit, head
 
         LOGGER.debug "The current HEAD is ${head.abbreviatedId}."
 
@@ -72,6 +73,10 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
         writeReleaseNotes tag
 
         grgit.close()
+    }
+
+    private Tag findTagOfHead(final Grgit grgit, final Commit head) {
+        grgit.tag.list().find { it.commit == head }
     }
 
     private void writeReleaseNotes(final Tag tag) {
