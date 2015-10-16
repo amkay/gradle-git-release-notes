@@ -8,4 +8,8 @@ license {
     if(plugins['java']) {
         exclude '**/package-info.java'
     }
+
+    if(plugins['groovy']) {
+        exclude '**/package-info.groovy'
+    }
 }
