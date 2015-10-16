@@ -66,7 +66,7 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
 
         if (!tag) {
             grgit.close()
-            throw new HeadNotTaggedException("The current HEAD is not tagged.")
+            throw new HeadNotTaggedException('The current HEAD is not tagged.')
         }
 
         def version = getVersion tag
@@ -92,9 +92,9 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
             def lines = tag.fullMessage.readLines()
 
             return lines.size() > 2 ? lines[ 2..-1 ] : [ ]
-        } else {
-            return tag.name.readLines()
         }
+
+        tag.name.readLines()
     }
 
     private void writeReleaseNotes(final String version, final List<String> releaseNotes) {
