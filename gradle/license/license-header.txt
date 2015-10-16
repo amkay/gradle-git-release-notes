@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Max Käufer
+ * Copyright ${year} ${name}
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.amkay.gradle.git.release.notes.exception
-
-import org.gradle.api.GradleException
-
-/**
- * TODO
- *
- * @author Max Käufer
- */
-class HeadNotTaggedException extends GradleException {
-
-    HeadNotTaggedException() {
-        super()
-    }
-
-    HeadNotTaggedException(final String message) {
-        super(message)
-    }
-
-    HeadNotTaggedException(final String message, final Throwable cause) {
-        super(message, cause)
-    }
-
-}
