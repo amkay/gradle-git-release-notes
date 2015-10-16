@@ -84,6 +84,7 @@ apply from: "$gradleDir/license-defaults.gradle"
 
 license {
     ext.name = 'Max Käufer'
+    ext.year = '2015'
 }
 
 apply plugin: 'org.ajoberstar.github-pages'
