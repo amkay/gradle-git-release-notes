@@ -57,7 +57,7 @@ apply plugin: 'com.github.amkay.gitflow'
 ext.githubUser = 'amkay'
 
 group "com.github.$githubUser"
-description 'A Gradle plugin that extracts release notes from Git\'s commit history.'
+description 'A Gradle plugin that extracts release notes from Git\'s commit history and annotated tags.'
 
 apply from: "$gradleDir/groovydoc-defaults.gradle"
 
