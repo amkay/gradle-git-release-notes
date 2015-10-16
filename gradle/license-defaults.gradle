@@ -4,4 +4,8 @@ license {
     header project.file("$gradleDir/license/license-header.txt")
 
     exclude '**/*.properties'
+
+    if(plugins['java']) {
+        exclude '**/package-info.java'
+    }
 }
