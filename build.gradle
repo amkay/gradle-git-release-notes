@@ -82,6 +82,10 @@ apply from: "$gradleDir/checks-defaults.gradle"
 apply plugin: 'license'
 apply from: "$gradleDir/license-defaults.gradle"
 
+license {
+    ext.name = 'Max Käufer'
+}
+
 apply plugin: 'org.ajoberstar.github-pages'
 apply from: "$gradleDir/github-pages-defaults.gradle"
 
