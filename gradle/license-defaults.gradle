@@ -2,4 +2,6 @@ def gradleDir = "${project.rootDir}/gradle"
 
 license {
     header project.file("$gradleDir/license/license-header.txt")
+
+    exclude '**/*.properties'
 }
