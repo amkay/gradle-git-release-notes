@@ -82,7 +82,7 @@ class ExtractReleaseNotesFromCommitLogTask extends DefaultTask {
         }
         def tagName = tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
 
-        if (tag.commit.equals(grgit.head())) {
+        if (tag.commit == grgit.head()) {
             grgit.close()
             throw new HeadTaggedException('The current HEAD is tagged.')
         }
