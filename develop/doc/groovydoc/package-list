@@ -1,4 +1,5 @@
 com.github.amkay.gradle.git.release.notes
 com.github.amkay.gradle.git.release.notes.dsl
+com.github.amkay.gradle.git.release.notes.exception
 com.github.amkay.gradle.git.release.notes.tag.finder
 com.github.amkay.gradle.git.release.notes.task
