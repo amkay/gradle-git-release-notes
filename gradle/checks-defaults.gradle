@@ -1,6 +1,6 @@
 def vCheckstyle = '6.11.2'
 def vPmd        = '5.4.0'
-def vCodeNarc   = '0.23'
+def vCodeNarc   = '0.24.1'
 
 def findbugsShortDescriptionCssPrefix   = 'tablerow'
 def findbugsLongDescriptionCssPrefix    = 'detailrow'
