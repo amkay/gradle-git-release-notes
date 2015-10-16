@@ -1,7 +1,7 @@
 def vJavaLang = '1.7'
 def gradleDir = "${rootProject.rootDir}/gradle"
 
-wrapper.gradleVersion = '2.5'
+wrapper.gradleVersion = '2.7'
 
 buildscript {
     repositories {
