@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.sourceforge.nekohtml:nekohtml:1.9.21'
+        classpath 'net.sourceforge.nekohtml:nekohtml:1.9.22'
     }
 }
 
