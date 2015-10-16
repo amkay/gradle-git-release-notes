@@ -17,6 +17,7 @@ package com.github.amkay.gradle.git.release.notes.task
 
 import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
 import com.github.amkay.gradle.git.release.notes.dsl.ReleaseNotes
+import com.github.amkay.gradle.git.release.notes.exception.HeadTaggedException
 import org.ajoberstar.grgit.Commit
 import org.ajoberstar.grgit.Grgit
 import org.gradle.api.DefaultTask
@@ -36,15 +37,15 @@ import static com.github.amkay.gradle.git.release.notes.tag.finder.TagFinder.TAG
  *
  * @author Max Käufer
  */
-class ExtractReleaseNotesTask extends DefaultTask {
+class ExtractReleaseNotesFromCommitLogTask extends DefaultTask {
 
-    private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesTask
+    private static final Logger LOGGER = Logging.getLogger ExtractReleaseNotesFromCommitLogTask
 
     /**
      * The name under which the task is registered on the project.
      **/
-    static final String NAME = (ExtractReleaseNotesTask.simpleName[ 0 ].toLowerCase() +
-                                ExtractReleaseNotesTask.simpleName.substring(1)).replaceAll 'Task', ''
+    static final String NAME = (ExtractReleaseNotesFromCommitLogTask.simpleName[ 0 ].toLowerCase() +
+                                ExtractReleaseNotesFromCommitLogTask.simpleName.substring(1)).replaceAll 'Task', ''
 
     public static final String HEADER_PLUGIN_NAME = 'gradle-git-release-notes'
 
@@ -64,7 +65,7 @@ class ExtractReleaseNotesTask extends DefaultTask {
     protected GitReleaseNotesPluginExtension extension
 
 
-    ExtractReleaseNotesTask() {
+    ExtractReleaseNotesFromCommitLogTask() {
         this.extension = project[ GitReleaseNotesPluginExtension.NAME ] as GitReleaseNotesPluginExtension
     }
 
@@ -80,6 +81,11 @@ class ExtractReleaseNotesTask extends DefaultTask {
             tagFinder.find project, grgit
         }
         def tagName = tag.name.startsWith(extension.versionPrefix) ? tag.name[ 1..-1 ] : tag.name
+
+        if (tag.commit.equals(grgit.head())) {
+            grgit.close()
+            throw new HeadTaggedException('The current HEAD is tagged.')
+        }
 
         List<Commit> commitsSinceLastTag
 

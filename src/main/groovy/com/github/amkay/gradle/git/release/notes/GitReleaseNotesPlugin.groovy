@@ -16,7 +16,8 @@
 package com.github.amkay.gradle.git.release.notes
 
 import com.github.amkay.gradle.git.release.notes.dsl.GitReleaseNotesPluginExtension
-import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesTask
+import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesFromTagTask
+import com.github.amkay.gradle.git.release.notes.task.ExtractReleaseNotesFromCommitLogTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -25,7 +26,7 @@ import org.gradle.api.Project
  *
  * <p>
  *     When the plugin is applied, it registers a {@link GitReleaseNotesPluginExtension} for configuration via a
- *     DSL and an {@link ExtractReleaseNotesTask}.
+ *     DSL and an {@link ExtractReleaseNotesFromCommitLogTask}.
  * </p>
  *
  * @author Max Käufer
@@ -39,7 +40,8 @@ class GitReleaseNotesPlugin implements Plugin<Project> {
     @Override
     void apply(final Project project) {
         project.extensions.create GitReleaseNotesPluginExtension.NAME, GitReleaseNotesPluginExtension, project
-        project.tasks.create ExtractReleaseNotesTask.NAME, ExtractReleaseNotesTask
+        project.tasks.create ExtractReleaseNotesFromCommitLogTask.NAME, ExtractReleaseNotesFromCommitLogTask
+        project.tasks.create ExtractReleaseNotesFromTagTask.NAME, ExtractReleaseNotesFromTagTask
     }
 
 }
