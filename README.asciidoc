@@ -21,7 +21,7 @@ image:https://www.versioneye.com/user/projects/55cbcb59dfed0a001f000184/badge.sv
 image:https://img.shields.io/badge/semver-2.0.0-blue.svg["Semantic Versioning", link="http://semver.org/spec/v2.0.0.html"]
 image:https://img.shields.io/badge/git-flow-blue.svg["Gitflow", link="http://nvie.com/posts/a-successful-git-branching-model/"]
 
-A https://gradle.org/[Gradle] plugin that extracts release notes from https://git-scm.com[Git]'s commit history.
+A https://gradle.org/[Gradle] plugin that extracts release notes from https://git-scm.com[Git]'s commit history and annotated tags.
 
 
 
