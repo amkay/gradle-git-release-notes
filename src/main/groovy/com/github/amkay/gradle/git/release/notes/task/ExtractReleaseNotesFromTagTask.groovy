@@ -47,7 +47,7 @@ class ExtractReleaseNotesFromTagTask extends DefaultTask {
                                'HEAD.'
     final String group       = 'documentation'
 
-    private GitReleaseNotesPluginExtension extension
+    private final GitReleaseNotesPluginExtension extension
 
 
     ExtractReleaseNotesFromTagTask() {
