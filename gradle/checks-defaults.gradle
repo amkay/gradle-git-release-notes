@@ -1,4 +1,4 @@
-def vCheckstyle = '6.7'
+def vCheckstyle = '6.11.2'
 def vPmd        = '5.3.2'
 def vCodeNarc   = '0.23'
 
