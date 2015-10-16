@@ -62,7 +62,7 @@ class ExtractReleaseNotesFromCommitLogTask extends DefaultTask {
                                'development branch.'
     final String group       = 'documentation'
 
-    protected GitReleaseNotesPluginExtension extension
+    protected final GitReleaseNotesPluginExtension extension
 
 
     ExtractReleaseNotesFromCommitLogTask() {
